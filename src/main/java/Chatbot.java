@@ -17,19 +17,43 @@ public class Chatbot {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             String userInput = scanner.nextLine().trim();
-            if (userInput.equalsIgnoreCase("bye")) {
-                ui.bidFarewell();
+            ExecutionResult result = execute(userInput);
+            if (result == ExecutionResult.EXIT) {
                 break;
-            } else if (userInput.equalsIgnoreCase("list")) {
-                String[] replies = IntStream.range(0, this.userInputs.size())
-                                           .mapToObj(i -> (i + 1) + ". " + this.userInputs.get(i))
-                                           .toArray(String[]::new);
-                ui.replyUser(replies);
-            } else {
-                this.userInputs.add(userInput);
-                ui.replyUser("added: " + userInput);
             }
         }
         scanner.close();
+    }
+
+    public enum ExecutionResult {
+        EXIT,
+        CONTINUE
+    }
+
+    private ExecutionResult execute(String userInput) {
+        return switch (userInput.toLowerCase()) {
+            case "bye" -> executeBye();
+            case "list" -> executeList();
+            default -> executeAdd(userInput);
+        };
+    }
+
+    private ExecutionResult executeBye() {
+        ui.bidFarewell();
+        return ExecutionResult.EXIT;
+    }
+
+    private ExecutionResult executeList() {
+        String[] replies = IntStream.range(0, this.userInputs.size())
+                                   .mapToObj(i -> (i + 1) + ". " + this.userInputs.get(i))
+                                   .toArray(String[]::new);
+        ui.replyUser(replies);
+        return ExecutionResult.CONTINUE;
+    }
+
+    private ExecutionResult executeAdd(String userInput) {
+        this.userInputs.add(userInput);
+        ui.replyUser("added: " + userInput);
+        return ExecutionResult.CONTINUE;
     }
 }
