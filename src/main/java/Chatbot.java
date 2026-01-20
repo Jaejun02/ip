@@ -1,8 +1,11 @@
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.stream.IntStream;
 
 public class Chatbot {
     private final String name;
     private final Ui ui = new Ui();
+    private ArrayList<String> userInputs = new ArrayList<>();
 
     public Chatbot(String name) {
         this.name = name;
@@ -17,8 +20,14 @@ public class Chatbot {
             if (userInput.equalsIgnoreCase("bye")) {
                 ui.bidFarewell();
                 break;
+            } else if (userInput.equalsIgnoreCase("list")) {
+                String[] replies = IntStream.range(0, this.userInputs.size())
+                                           .mapToObj(i -> (i + 1) + ". " + this.userInputs.get(i))
+                                           .toArray(String[]::new);
+                ui.replyUser(replies);
             } else {
-                ui.replyUser(userInput);
+                this.userInputs.add(userInput);
+                ui.replyUser("added: " + userInput);
             }
         }
         scanner.close();
