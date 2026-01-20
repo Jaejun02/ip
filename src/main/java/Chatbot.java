@@ -1,19 +1,26 @@
+import java.util.Scanner;
+
 public class Chatbot {
     private final String name;
+    private final Ui ui = new Ui();
 
     public Chatbot(String name) {
         this.name = name;
     }
 
     public void run() {
-        String splitter = "-".repeat(60);
-        String greeting = "Hello! I am " + name + ", your personal chatbot.\nWhat can I do for you today?";
-        String farewell = "Goodbye! Hope to see you again!";
+        ui.greetUser(this.name);
 
-        System.out.println(splitter);
-        System.out.println(greeting);
-        System.out.println(splitter);
-        System.out.println(farewell);
-        System.out.println(splitter);
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            String userInput = scanner.nextLine().trim();
+            if (userInput.equalsIgnoreCase("bye")) {
+                ui.bidFarewell();
+                break;
+            } else {
+                ui.replyUser(userInput);
+            }
+        }
+        scanner.close();
     }
 }
