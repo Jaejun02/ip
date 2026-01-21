@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.stream.IntStream;
+
 public class Ui {
     private final String splitter = "-".repeat(60);
     private final String indentation = " ".repeat(4);
@@ -26,11 +29,21 @@ public class Ui {
         formatPrint(farewell);
     }
 
-    public void replyUser(String reply) {
-        formatPrint(reply);
+    public void showUserInputList(ArrayList<String> userInputs) {
+        if (userInputs.isEmpty()) {
+            formatPrint("Your input list is currently empty.");
+            return;
+        }
+
+        String[] formattedUserInputs = IntStream.range(0, userInputs.size())
+                .mapToObj(i -> (i + 1) + ". " + userInputs.get(i))
+                .toArray(String[]::new);
+        formatPrint(formattedUserInputs);
+
     }
 
-    public void replyUser(String[] replies) {
-        formatPrint(replies);
+    public void confirmAddition(String userInput) {
+        String confirmation = "Added: " + userInput;
+        formatPrint(confirmation);
     }
 }

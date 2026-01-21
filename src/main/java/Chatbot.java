@@ -1,6 +1,5 @@
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.util.stream.IntStream;
 
 public class Chatbot {
     private final String name;
@@ -44,16 +43,13 @@ public class Chatbot {
     }
 
     private ExecutionResult executeList() {
-        String[] replies = IntStream.range(0, this.userInputs.size())
-                                   .mapToObj(i -> (i + 1) + ". " + this.userInputs.get(i))
-                                   .toArray(String[]::new);
-        ui.replyUser(replies);
+        ui.showUserInputList(this.userInputs);
         return ExecutionResult.CONTINUE;
     }
 
     private ExecutionResult executeAdd(String userInput) {
         this.userInputs.add(userInput);
-        ui.replyUser("added: " + userInput);
+        ui.confirmAddition(userInput);
         return ExecutionResult.CONTINUE;
     }
 }
