@@ -4,6 +4,7 @@ import java.util.stream.IntStream;
 public class Ui {
     private final String splitter = "-".repeat(60);
     private final String indentation = " ".repeat(4);
+    private final String smallIndentation = " ".repeat(2);
 
     private void formatPrint(String message) {
         System.out.println(this.indentation + this.splitter);
@@ -44,6 +45,18 @@ public class Ui {
 
     public void confirmAddition(Task newTask) {
         String confirmation = "Added: " + newTask.toString();
+        formatPrint(confirmation);
+    }
+
+    public void confirmMark(Task markedTask) {
+        String[] confirmation = {"Good job! I have marked this task as done!",
+                smallIndentation + markedTask.toString()};
+        formatPrint(confirmation);
+    }
+
+    public void confirmUnmark(Task unmarkedTask) {
+        String[] confirmation = {"Alright! I have marked this task as not done yet.",
+                smallIndentation + unmarkedTask.toString()};
         formatPrint(confirmation);
     }
 }

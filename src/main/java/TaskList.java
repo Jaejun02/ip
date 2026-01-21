@@ -7,17 +7,26 @@ public class TaskList {
         this.tasks.add(task);
     }
 
+    public Task getTask(int index) {
+        if (index > 0 && index <= this.tasks.size()) {
+            return this.tasks.get(index - 1);
+        }
+        String message = "We do not have a task numbered " + index + " in the list."
+                + " The list currently has " + this.tasks.size() + " tasks.";
+        throw new IndexOutOfBoundsException(message);
+    }
+
     public ArrayList<Task> getTasks() {
         return this.tasks;
     }
 
-    public void markTaskAsDone(int index) {
+    public void markTask(int index) {
         if (index > 0 && index <= this.tasks.size()) {
             this.tasks.get(index - 1).setDone(true);
         }
     }
 
-    public void markTaskAsUndone(int index) {
+    public void unmarkTask(int index) {
         if (index > 0 && index <= this.tasks.size()) {
             this.tasks.get(index - 1).setDone(false);
         }
