@@ -29,21 +29,21 @@ public class Ui {
         formatPrint(farewell);
     }
 
-    public void showUserInputList(ArrayList<String> userInputs) {
-        if (userInputs.isEmpty()) {
-            formatPrint("Your input list is currently empty.");
+    public void showUserInputList(ArrayList<Task> tasks) {
+        if (tasks.isEmpty()) {
+            formatPrint("You currently don't have any tasks in your list.");
             return;
         }
 
-        String[] formattedUserInputs = IntStream.range(0, userInputs.size())
-                .mapToObj(i -> (i + 1) + ". " + userInputs.get(i))
+        String[] formattedUserInputs = IntStream.range(0, tasks.size())
+                .mapToObj(i -> (i + 1) + ". " + tasks.get(i).toString())
                 .toArray(String[]::new);
         formatPrint(formattedUserInputs);
 
     }
 
-    public void confirmAddition(String userInput) {
-        String confirmation = "Added: " + userInput;
+    public void confirmAddition(Task newTask) {
+        String confirmation = "Added: " + newTask.toString();
         formatPrint(confirmation);
     }
 }

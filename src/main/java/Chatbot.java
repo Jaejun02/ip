@@ -1,10 +1,9 @@
 import java.util.Scanner;
-import java.util.ArrayList;
 
 public class Chatbot {
     private final String name;
     private final Ui ui = new Ui();
-    private ArrayList<String> userInputs = new ArrayList<>();
+    private TaskList tasks = new TaskList();
 
     public Chatbot(String name) {
         this.name = name;
@@ -43,13 +42,14 @@ public class Chatbot {
     }
 
     private ExecutionResult executeList() {
-        ui.showUserInputList(this.userInputs);
+        ui.showUserInputList(this.tasks.getTasks());
         return ExecutionResult.CONTINUE;
     }
 
     private ExecutionResult executeAdd(String userInput) {
-        this.userInputs.add(userInput);
-        ui.confirmAddition(userInput);
+        Task newTask = new Task(userInput);
+        this.tasks.addTask(newTask);
+        ui.confirmAddition(newTask);
         return ExecutionResult.CONTINUE;
     }
 }
