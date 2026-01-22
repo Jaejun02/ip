@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Parser {
     public Command parseCommand(String userInput) {
         String[] inputTokens = userInput.trim().split("\\s+");
@@ -8,7 +10,12 @@ public class Parser {
             case "list" -> parseListCommand(inputTokens);
             case "mark" -> parseMarkCommand(inputTokens);
             case "unmark" -> parseUnmarkCommand(inputTokens);
-            default -> parseAddCommand(userInput);
+            case "todo" -> parseTodoCommand(inputTokens);
+            case "deadline" -> parseDeadlineCommand(inputTokens);
+            case "event" -> parseEventCommand(inputTokens);
+            default -> {
+                throw new UnknownCommandException(userInput);
+            }
         };
 
     }
@@ -31,10 +38,6 @@ public class Parser {
         } else {
             return new ListCommand();
         }
-    }
-
-    private Command parseAddCommand(String userInput) {
-        return new AddCommand(userInput);
     }
 
     private Command parseMarkCommand(String[] inputTokens) {
@@ -68,6 +71,56 @@ public class Parser {
                         + inputTokens[1];
                 throw new IllegalArgumentException(message);
             }
+        }
+    }
+
+    private Command parseTodoCommand(String[] inputTokens) {
+        if (inputTokens.length < 2) {
+            String message = "The 'todo' command requires a description!\nReceived: "
+                    + String.join(" ", inputTokens);
+            throw new IllegalArgumentException(message);
+        } else {
+            String description = String.join(" ", Arrays.copyOfRange(inputTokens, 1, inputTokens.length));
+            return new AddTodoCommand(description);
+        }
+    }
+
+    private Command parseDeadlineCommand(String[] inputTokens) {
+        String argument = String.join(" ", Arrays.copyOfRange(inputTokens, 1, inputTokens.length));
+        String[] parts = argument.split("/by");
+        if (parts.length != 2) {
+            String message = "The 'deadline' command requires a description and a due date!\nReceived: "
+                    + argument;
+            throw new IllegalArgumentException(message);
+        } else {
+            String description = parts[0].trim();
+            String by = parts[1].trim();
+            if (description.isEmpty() || by.isEmpty()) {
+                String message = "The 'deadline' command requires a non-empty description and due date!\nReceived: "
+                        + argument;
+                throw new IllegalArgumentException(message);
+            }
+            return new AddDeadlineCommand(description, by);
+        }
+    }
+
+    private Command parseEventCommand(String[] inputTokens) {
+        String argument = String.join(" ", Arrays.copyOfRange(inputTokens, 1, inputTokens.length));
+        String[] parts = argument.split("\\s*/from\\s*|\\s*/to\\s*");
+        if (parts.length != 3) {
+            String message = "The 'event' command requires a description, start time, and end time!\nReceived: "
+                    + argument;
+            throw new IllegalArgumentException(message);
+        } else {
+            String description = parts[0].trim();
+            String from = parts[1].trim();
+            String to = parts[2].trim();
+            if (description.isEmpty() || from.isEmpty() || to.isEmpty()) {
+                String message = "The 'event' command requires a non-empty description, start time, and end time!\nReceived: "
+                        + argument;
+                throw new IllegalArgumentException(message);
+            }
+            return new AddEventCommand(description, from, to);
         }
     }
 }
