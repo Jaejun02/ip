@@ -1,5 +1,10 @@
+package elyra;
+
 import java.util.ArrayList;
 import java.util.stream.IntStream;
+
+import elyra.task.Task;
+import elyra.task.TaskList;
 
 public class Ui {
     private final String splitter = "-".repeat(60);

@@ -1,10 +1,18 @@
+package elyra;
+
 import java.util.Scanner;
+
+import elyra.parser.Parser;
+import elyra.task.TaskList;
+import elyra.command.Command;
+import elyra.command.Context;
+import elyra.command.ExecutionResult;
 
 public class Chatbot {
     private final String name;
     private final Ui ui = new Ui();
     private final Parser parser = new Parser();
-    private TaskList tasks = new TaskList();
+    private final TaskList tasks = new TaskList();
 
     public Chatbot(String name) {
         this.name = name;

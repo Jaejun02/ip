@@ -1,3 +1,7 @@
+package elyra.command;
+
+import elyra.task.Deadline;
+
 public class AddDeadlineCommand implements Command{
     private final String description;
     private final String by;

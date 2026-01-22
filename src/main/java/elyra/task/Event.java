@@ -1,3 +1,5 @@
+package elyra.task;
+
 public class Event extends Task {
     private final String startAt;
     private final String endAt;

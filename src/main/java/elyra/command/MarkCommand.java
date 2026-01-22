@@ -1,3 +1,7 @@
+package elyra.command;
+
+import elyra.task.Task;
+
 public class MarkCommand implements Command {
     private final int index;
 

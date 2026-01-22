@@ -1,1 +1,0 @@
-public record Context(Ui ui, TaskList tasks) {};

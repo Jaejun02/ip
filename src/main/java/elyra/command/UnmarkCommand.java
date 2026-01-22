@@ -1,3 +1,7 @@
+package elyra.command;
+
+import elyra.task.Task;
+
 public class UnmarkCommand implements Command {
     private final int index;
 

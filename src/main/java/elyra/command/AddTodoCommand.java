@@ -1,3 +1,7 @@
+package elyra.command;
+
+import elyra.task.ToDo;
+
 public class AddTodoCommand implements Command{
     private final String description;
 
@@ -7,7 +11,7 @@ public class AddTodoCommand implements Command{
 
     @Override
     public ExecutionResult execute(Context context) {
-        Task newTask = new ToDo(this.description);
+        ToDo newTask = new ToDo(this.description);
         context.tasks().addTask(newTask);
         context.ui().confirmAddition(newTask, context.tasks());
         return ExecutionResult.CONTINUE;

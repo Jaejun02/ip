@@ -1,3 +1,7 @@
+package elyra.command;
+
+import elyra.task.Event;
+
 public class AddEventCommand implements Command {
     private final String description;
     private final String startAt;

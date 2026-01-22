@@ -1,3 +1,5 @@
+package elyra.command;
+
 public class ByeCommand implements Command {
     @Override
     public ExecutionResult execute(Context context) {
