@@ -43,8 +43,10 @@ public class Ui {
 
     }
 
-    public void confirmAddition(Task newTask) {
-        String confirmation = "Added: " + newTask.toString();
+    public void confirmAddition(Task newTask, TaskList tasks) {
+        String[] confirmation = {"Got it! I have added this task:",
+                smallIndentation + newTask.toString(),
+                "Now you have " + tasks.getTasks().size() + " tasks in the list."};
         formatPrint(confirmation);
     }
 

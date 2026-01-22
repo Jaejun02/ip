@@ -9,7 +9,7 @@ public class AddTodoCommand implements Command{
     public ExecutionResult execute(Context context) {
         Task newTask = new ToDo(this.description);
         context.tasks().addTask(newTask);
-        context.ui().confirmAddition(newTask);
+        context.ui().confirmAddition(newTask, context.tasks());
         return ExecutionResult.CONTINUE;
     }
 }
