@@ -66,4 +66,12 @@ public class Ui {
                 smallIndentation + unmarkedTask.toString()};
         formatPrint(confirmation);
     }
+
+    public void showErrorMessage(String message, String userInput) {
+        String[] errorMessage = {"Oops! We encountered a problem!",
+                message,
+                smallIndentation + "Received: \"" + userInput + "\"",
+                "Please check your command and try again."};
+        formatPrint(errorMessage);
+    }
 }

@@ -24,12 +24,17 @@ public class Chatbot {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             String userInput = scanner.nextLine().trim();
-            Command currentCommand = parser.parseCommand(userInput);
-            Context currentContext = new Context(this.ui, this.tasks);
-            ExecutionResult result = currentCommand.execute(currentContext);
-            if (result == ExecutionResult.EXIT) {
-                break;
+            try {
+                Command currentCommand = parser.parseCommand(userInput);
+                Context currentContext = new Context(this.ui, this.tasks);
+                ExecutionResult result = currentCommand.execute(currentContext);
+                if (result == ExecutionResult.EXIT) {
+                    break;
+                }
+            } catch (IllegalArgumentException | IndexOutOfBoundsException err) {
+                ui.showErrorMessage(err.getMessage(), userInput);
             }
+
         }
         scanner.close();
     }
