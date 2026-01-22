@@ -102,6 +102,23 @@
     ------------------------------------------------------------
     ------------------------------------------------------------
     Oops! We encountered a problem!
+    The 'delete' command requires exactly one argument!
+      Received: "delete"
+    Please check your command and try again.
+    ------------------------------------------------------------
+    ------------------------------------------------------------
+    Oops! We encountered a problem!
+    We do not have a task numbered 6 in the list. The list currently has 5 tasks.
+      Received: "delete 6"
+    Please check your command and try again.
+    ------------------------------------------------------------
+    ------------------------------------------------------------
+    Noted! I have removed this task:
+      [D][ ] submit dsa3101 project (by: April 10th)
+    Now you have 4 tasks in the list.
+    ------------------------------------------------------------
+    ------------------------------------------------------------
+    Oops! We encountered a problem!
     I'm sorry, but I don't recognize the command provided!
       Received: "ls"
     Please check your command and try again.

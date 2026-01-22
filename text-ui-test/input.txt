@@ -16,6 +16,9 @@ list
 unmark 10
 unmark all
 unmark 4
+delete
+delete 6
+delete 2
 ls
 bye bye
 bye
