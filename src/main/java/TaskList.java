@@ -21,14 +21,12 @@ public class TaskList {
     }
 
     public void markTask(int index) {
-        if (index > 0 && index <= this.tasks.size()) {
-            this.tasks.get(index - 1).setDone(true);
-        }
+        Task currentTask = getTask(index); // To check validity of index
+        currentTask.setDone(true);
     }
 
     public void unmarkTask(int index) {
-        if (index > 0 && index <= this.tasks.size()) {
-            this.tasks.get(index - 1).setDone(false);
-        }
+        Task currentTask = getTask(index); // To check validity of index
+        currentTask.setDone(false);
     }
 }
