@@ -1,7 +1,58 @@
-Hello from
- ____        _        
-|  _ \ _   _| | _____ 
-| | | | | | | |/ / _ \
-| |_| | |_| |   <  __/
-|____/ \__,_|_|\_\___|
-
+    ------------------------------------------------------------
+    Hello! I am Elyra, your personal chatbot.
+    What can I do for you today?
+    ------------------------------------------------------------
+    ------------------------------------------------------------
+    Got it! I have added this task:
+      [T][ ] solve cs2103 tutorial
+    Now you have 1 tasks in the list.
+    ------------------------------------------------------------
+    ------------------------------------------------------------
+    Got it! I have added this task:
+      [D][ ] submit dsa3101 project (by: April 10th)
+    Now you have 2 tasks in the list.
+    ------------------------------------------------------------
+    ------------------------------------------------------------
+    Got it! I have added this task:
+      [E][ ] career fair (from: May 7th 2pm to: 6pm)
+    Now you have 3 tasks in the list.
+    ------------------------------------------------------------
+    ------------------------------------------------------------
+    Good job! I have marked this task as done!
+      [T][X] solve cs2103 tutorial
+    ------------------------------------------------------------
+    ------------------------------------------------------------
+    Got it! I have added this task:
+      [T][ ] join coding club
+    Now you have 4 tasks in the list.
+    ------------------------------------------------------------
+    ------------------------------------------------------------
+    Good job! I have marked this task as done!
+      [T][X] join coding club
+    ------------------------------------------------------------
+    ------------------------------------------------------------
+    Got it! I have added this task:
+      [T][ ] visit museum
+    Now you have 5 tasks in the list.
+    ------------------------------------------------------------
+    ------------------------------------------------------------
+    1. [T][X] solve cs2103 tutorial
+    2. [D][ ] submit dsa3101 project (by: April 10th)
+    3. [E][ ] career fair (from: May 7th 2pm to: 6pm)
+    4. [T][X] join coding club
+    5. [T][ ] visit museum
+    ------------------------------------------------------------
+    ------------------------------------------------------------
+    Alright! I have marked this task as not done yet.
+      [T][ ] join coding club
+    ------------------------------------------------------------
+    ------------------------------------------------------------
+    1. [T][X] solve cs2103 tutorial
+    2. [D][ ] submit dsa3101 project (by: April 10th)
+    3. [E][ ] career fair (from: May 7th 2pm to: 6pm)
+    4. [T][ ] join coding club
+    5. [T][ ] visit museum
+    ------------------------------------------------------------
+    ------------------------------------------------------------
+    Goodbye! Hope to see you again soon!
+    ------------------------------------------------------------

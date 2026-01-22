@@ -1,0 +1,11 @@
+todo solve cs2103 tutorial
+deadline submit dsa3101 project /by April 10th
+event career fair /from May 7th 2pm /to 6pm
+mark 1
+todo join coding club
+mark 4
+todo visit museum
+list
+unmark 4
+list
+bye
