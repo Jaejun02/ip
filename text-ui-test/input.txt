@@ -1,11 +1,21 @@
+read book
+todo
 todo solve cs2103 tutorial
+deadline submit dsa3101 project
 deadline submit dsa3101 project /by April 10th
+event career fair /from May 7th 2pm
 event career fair /from May 7th 2pm /to 6pm
+mark 4
+mark all
 mark 1
 todo join coding club
 mark 4
 todo visit museum
+list all
 list
+unmark 10
+unmark all
 unmark 4
-list
+ls
+bye bye
 bye

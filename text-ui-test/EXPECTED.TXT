@@ -3,9 +3,27 @@
     What can I do for you today?
     ------------------------------------------------------------
     ------------------------------------------------------------
+    Oops! We encountered a problem!
+    I'm sorry, but I don't recognize the command provided!
+      Received: "read book"
+    Please check your command and try again.
+    ------------------------------------------------------------
+    ------------------------------------------------------------
+    Oops! We encountered a problem!
+    The 'todo' command requires a description!
+      Received: "todo"
+    Please check your command and try again.
+    ------------------------------------------------------------
+    ------------------------------------------------------------
     Got it! I have added this task:
       [T][ ] solve cs2103 tutorial
     Now you have 1 tasks in the list.
+    ------------------------------------------------------------
+    ------------------------------------------------------------
+    Oops! We encountered a problem!
+    The 'deadline' command requires a description and a due date!
+      Received: "deadline submit dsa3101 project"
+    Please check your command and try again.
     ------------------------------------------------------------
     ------------------------------------------------------------
     Got it! I have added this task:
@@ -13,9 +31,27 @@
     Now you have 2 tasks in the list.
     ------------------------------------------------------------
     ------------------------------------------------------------
+    Oops! We encountered a problem!
+    The 'event' command requires a description, start time, and end time!
+      Received: "event career fair /from May 7th 2pm"
+    Please check your command and try again.
+    ------------------------------------------------------------
+    ------------------------------------------------------------
     Got it! I have added this task:
       [E][ ] career fair (from: May 7th 2pm to: 6pm)
     Now you have 3 tasks in the list.
+    ------------------------------------------------------------
+    ------------------------------------------------------------
+    Oops! We encountered a problem!
+    We do not have a task numbered 4 in the list. The list currently has 3 tasks.
+      Received: "mark 4"
+    Please check your command and try again.
+    ------------------------------------------------------------
+    ------------------------------------------------------------
+    Oops! We encountered a problem!
+    The 'mark' command requires a numeric argument!
+      Received: "mark all"
+    Please check your command and try again.
     ------------------------------------------------------------
     ------------------------------------------------------------
     Good job! I have marked this task as done!
@@ -36,6 +72,12 @@
     Now you have 5 tasks in the list.
     ------------------------------------------------------------
     ------------------------------------------------------------
+    Oops! We encountered a problem!
+    The 'list' command does not take any arguments!
+      Received: "list all"
+    Please check your command and try again.
+    ------------------------------------------------------------
+    ------------------------------------------------------------
     1. [T][X] solve cs2103 tutorial
     2. [D][ ] submit dsa3101 project (by: April 10th)
     3. [E][ ] career fair (from: May 7th 2pm to: 6pm)
@@ -43,15 +85,32 @@
     5. [T][ ] visit museum
     ------------------------------------------------------------
     ------------------------------------------------------------
+    Oops! We encountered a problem!
+    We do not have a task numbered 10 in the list. The list currently has 5 tasks.
+      Received: "unmark 10"
+    Please check your command and try again.
+    ------------------------------------------------------------
+    ------------------------------------------------------------
+    Oops! We encountered a problem!
+    The 'unmark' command requires a numeric argument!
+      Received: "unmark all"
+    Please check your command and try again.
+    ------------------------------------------------------------
+    ------------------------------------------------------------
     Alright! I have marked this task as not done yet.
       [T][ ] join coding club
     ------------------------------------------------------------
     ------------------------------------------------------------
-    1. [T][X] solve cs2103 tutorial
-    2. [D][ ] submit dsa3101 project (by: April 10th)
-    3. [E][ ] career fair (from: May 7th 2pm to: 6pm)
-    4. [T][ ] join coding club
-    5. [T][ ] visit museum
+    Oops! We encountered a problem!
+    I'm sorry, but I don't recognize the command provided!
+      Received: "ls"
+    Please check your command and try again.
+    ------------------------------------------------------------
+    ------------------------------------------------------------
+    Oops! We encountered a problem!
+    The 'bye' command does not take any arguments!
+      Received: "bye bye"
+    Please check your command and try again.
     ------------------------------------------------------------
     ------------------------------------------------------------
     Goodbye! Hope to see you again soon!
