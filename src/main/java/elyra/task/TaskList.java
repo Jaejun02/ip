@@ -31,4 +31,10 @@ public class TaskList {
         Task currentTask = getTask(index); // To check validity of index
         currentTask.setDone(false);
     }
+
+    public Task deleteTask(int index) {
+        Task removedTask = getTask(index); // To check validity of index
+        this.tasks.remove(index - 1);
+        return removedTask;
+    }
 }

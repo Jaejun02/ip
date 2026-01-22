@@ -10,6 +10,7 @@ import elyra.command.UnmarkCommand;
 import elyra.command.AddTodoCommand;
 import elyra.command.AddDeadlineCommand;
 import elyra.command.AddEventCommand;
+import elyra.command.DeleteCommand;
 
 public class Parser {
     public Command parseCommand(String userInput) {
@@ -24,6 +25,7 @@ public class Parser {
             case "todo" -> parseTodoCommand(inputTokens);
             case "deadline" -> parseDeadlineCommand(inputTokens);
             case "event" -> parseEventCommand(inputTokens);
+            case "delete" -> parseDeleteCommand(inputTokens);
             default -> {
                 String message = "I'm sorry, but I don't recognize the command provided!";
                 throw new IllegalArgumentException(message);
@@ -122,6 +124,21 @@ public class Parser {
                 throw new IllegalArgumentException(message);
             }
             return new AddEventCommand(description, from, to);
+        }
+    }
+
+    private Command parseDeleteCommand(String[] inputTokens) {
+        if (inputTokens.length != 2) {
+            String message = "The 'delete' command requires exactly one argument!";
+            throw new IllegalArgumentException(message);
+        } else {
+            try {
+                int index = Integer.parseInt(inputTokens[1]);
+                return new DeleteCommand(index);
+            } catch (NumberFormatException e) {
+                String message = "The 'delete' command requires a numeric argument!";
+                throw new IllegalArgumentException(message);
+            }
         }
     }
 }

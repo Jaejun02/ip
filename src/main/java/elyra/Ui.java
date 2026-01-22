@@ -55,6 +55,13 @@ public class Ui {
         formatPrint(confirmation);
     }
 
+    public void confirmDeletion(Task removedTask, TaskList tasks) {
+        String[] confirmation = {"Noted! I have removed this task:",
+                smallIndentation + removedTask.toString(),
+                "Now you have " + tasks.getTasks().size() + " tasks in the list."};
+        formatPrint(confirmation);
+    }
+
     public void confirmMark(Task markedTask) {
         String[] confirmation = {"Good job! I have marked this task as done!",
                 smallIndentation + markedTask.toString()};
