@@ -7,6 +7,7 @@ import elyra.task.TaskList;
 import elyra.command.Command;
 import elyra.command.Context;
 import elyra.command.ExecutionResult;
+import elyra.ui.Ui;
 
 public class Chatbot {
     private final String name;

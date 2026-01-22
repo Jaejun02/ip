@@ -1,4 +1,4 @@
-package elyra;
+package elyra.ui;
 
 import java.util.ArrayList;
 import java.util.stream.IntStream;
