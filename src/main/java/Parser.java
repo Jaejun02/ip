@@ -19,7 +19,7 @@ public class Parser {
                     + String.join(" ", inputTokens);
             throw new IllegalArgumentException(message);
         } else {
-            return new Command(inputTokens[0], "");
+            return new ByeCommand();
         }
     }
 
@@ -29,12 +29,12 @@ public class Parser {
                     + String.join(" ", inputTokens);
             throw new IllegalArgumentException(message);
         } else {
-            return new Command(inputTokens[0], "");
+            return new ListCommand();
         }
     }
 
     private Command parseAddCommand(String userInput) {
-        return new Command("", userInput);
+        return new AddCommand(userInput);
     }
 
     private Command parseMarkCommand(String[] inputTokens) {
@@ -44,8 +44,8 @@ public class Parser {
             throw new IllegalArgumentException(message);
         } else {
             try {
-                Integer.parseInt(inputTokens[1]);
-                return new Command(inputTokens[0], inputTokens[1]);
+                int index = Integer.parseInt(inputTokens[1]);
+                return new MarkCommand(index);
             } catch (NumberFormatException e) {
                 String message = "The 'mark' command requires a numeric argument!\nReceived: "
                         + inputTokens[1];
@@ -61,8 +61,8 @@ public class Parser {
             throw new IllegalArgumentException(message);
         } else {
             try {
-                Integer.parseInt(inputTokens[1]);
-                return new Command(inputTokens[0], inputTokens[1]);
+                int index = Integer.parseInt(inputTokens[1]);
+                return new UnmarkCommand(index);
             } catch (NumberFormatException e) {
                 String message = "The 'unmark' command requires a numeric argument!\nReceived: "
                         + inputTokens[1];

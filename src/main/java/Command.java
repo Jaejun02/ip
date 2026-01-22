@@ -1,1 +1,3 @@
-public record Command (String commandWord, String argument) {}
+public interface Command {
+    public ExecutionResult execute(Context context);
+}
