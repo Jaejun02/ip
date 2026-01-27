@@ -74,11 +74,19 @@ public class Ui {
         formatPrint(confirmation);
     }
 
-    public void showErrorMessage(String message, String userInput) {
+    public void showUserInputErrorMessage(String message, String userInput) {
         String[] errorMessage = {"Oops! We encountered a problem!",
                 message,
                 smallIndentation + "Received: \"" + userInput + "\"",
                 "Please check your command and try again."};
+        formatPrint(errorMessage);
+    }
+
+    public void showLoadDataErrorMessage(String message) {
+        String[] errorMessage = {"Oops! We encountered a problem!",
+                message,
+                "We'll start with an empty task list instead.",
+                "You can exit anytime and check your data file for issues."};
         formatPrint(errorMessage);
     }
 }

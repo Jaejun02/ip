@@ -1,5 +1,6 @@
 package elyra;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 import elyra.parser.Parser;
@@ -8,12 +9,30 @@ import elyra.command.Command;
 import elyra.command.Context;
 import elyra.command.ExecutionResult;
 import elyra.ui.Ui;
+import elyra.storage.Storage;
 
 public class Elyra {
     private final String name = "Elyra";
     private final Ui ui = new Ui();
     private final Parser parser = new Parser();
-    private final TaskList tasks = new TaskList();
+    private final TaskList tasks;
+    private final Storage storage;
+
+    public Elyra(String filePath) {
+        this.storage = new Storage(filePath);
+        TaskList loadedTasks;
+        try {
+            loadedTasks = storage.loadTasks();
+        } catch (IOException err) {
+            ui.showLoadDataErrorMessage(err.getMessage());
+            loadedTasks = new TaskList();
+        }
+        this.tasks = loadedTasks;
+    }
+
+    public Elyra() {
+        this(Storage.DEFAULT_PATH);
+    }
 
     public void run() {
         ui.greetUser(this.name);
@@ -29,7 +48,7 @@ public class Elyra {
                     break;
                 }
             } catch (IllegalArgumentException | IndexOutOfBoundsException err) {
-                ui.showErrorMessage(err.getMessage(), userInput);
+                ui.showUserInputErrorMessage(err.getMessage(), userInput);
             }
 
         }

@@ -10,6 +10,12 @@ public class Event extends Task {
         this.endAt = endAt;
     }
 
+    public Event(String description, boolean isDone, String startAt, String endAt) {
+        super(description, isDone);
+        this.startAt = startAt;
+        this.endAt = endAt;
+    }
+
     @Override
     public String toString() {
         return "[E]" + super.toString() + " (from: " + this.startAt + " to: " + this.endAt + ")";
