@@ -9,15 +9,11 @@ import elyra.command.Context;
 import elyra.command.ExecutionResult;
 import elyra.ui.Ui;
 
-public class Chatbot {
-    private final String name;
+public class Elyra {
+    private final String name = "Elyra";
     private final Ui ui = new Ui();
     private final Parser parser = new Parser();
     private final TaskList tasks = new TaskList();
-
-    public Chatbot(String name) {
-        this.name = name;
-    }
 
     public void run() {
         ui.greetUser(this.name);
@@ -38,5 +34,9 @@ public class Chatbot {
 
         }
         scanner.close();
+    }
+
+    public static void main(String[] args) {
+        new Elyra().run();
     }
 }
