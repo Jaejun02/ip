@@ -89,4 +89,12 @@ public class Ui {
                 "You can exit anytime and check your data file for issues."};
         formatPrint(errorMessage);
     }
+
+    public void showSaveDataErrorMessage(String message) {
+        String[] errorMessage = {"Oops! We encountered a problem!",
+                message,
+                "Your task list could not be saved.",
+                "Please fix the issue and try again."};
+        formatPrint(errorMessage);
+    }
 }

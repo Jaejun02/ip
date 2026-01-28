@@ -10,6 +10,12 @@ public class ToDo extends Task {
     }
 
     @Override
+    public String[] getInfos() {
+        String[] baseInfo = super.getInfos();
+        return new String[] {"T", baseInfo[0], baseInfo[1]};
+    }
+
+    @Override
     public String toString() {
         return "[T]" + super.toString();
     }

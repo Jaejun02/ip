@@ -14,6 +14,12 @@ public class Deadline extends Task {
     }
 
     @Override
+    public String[] getInfos() {
+        String[] baseInfo = super.getInfos();
+        return new String[] {"D", baseInfo[0], baseInfo[1], this.by};
+    }
+
+    @Override
     public String toString() {
         return "[D]" + super.toString() + " (by: " + this.by + ")";
     }

@@ -17,6 +17,12 @@ public class Event extends Task {
     }
 
     @Override
+    public String[] getInfos() {
+        String[] baseInfo = super.getInfos();
+        return new String[] {"E", baseInfo[0], baseInfo[1], this.startAt, this.endAt};
+    }
+
+    @Override
     public String toString() {
         return "[E]" + super.toString() + " (from: " + this.startAt + " to: " + this.endAt + ")";
     }

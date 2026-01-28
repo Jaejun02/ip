@@ -1,5 +1,7 @@
 package elyra.storage;
 
+import java.util.regex.Pattern;
+
 import elyra.task.Task;
 import elyra.task.TaskList;
 import elyra.task.ToDo;
@@ -15,7 +17,8 @@ import java.util.Scanner;
 
 public class Storage {
     public static final String DEFAULT_PATH = "./data/elyra.txt";
-    private static final String DELIM = " \\|\\| ";
+    public static final String DELIM = " ||| ";
+    private static final String DELIM_REGEX = Pattern.quote(DELIM);
 
     private final Path filePath;
 
@@ -44,8 +47,21 @@ public class Storage {
         }
     }
 
+    public void saveTasks(TaskList tasks) throws IOException {
+        Path parent = filePath.getParent();
+        if (parent != null) {
+            Files.createDirectories(parent);
+        }
+
+        try (FileWriter writer = new FileWriter(filePath.toFile(), false)) {
+            for (Task task : tasks.getTasks()) {
+                writer.write(serializeTask(task) + System.lineSeparator());
+            }
+        }
+    }
+
     private Task parseTaskFromLine(String line, int lineNumber) throws IOException {
-        String[] parts = line.split(DELIM);
+        String[] parts = line.split(DELIM_REGEX);
         if (parts.length < 3) {
             String errorMessage = String.format("Found corrupted data at line %d (too few fields for Tasks).",
                     lineNumber);
@@ -93,5 +109,10 @@ public class Storage {
                     lineNumber, isDone);
             throw new IOException(errorMessage);
         }
+    }
+
+    private String serializeTask(Task task) {
+        String[] taskInfos = task.getInfos();
+        return String.join(DELIM, taskInfos);
     }
 }
