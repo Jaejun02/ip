@@ -1,5 +1,7 @@
 package elyra.task;
 
+import java.time.format.DateTimeFormatter;
+
 public class Task {
     private final String description;
     private boolean isDone;
@@ -17,12 +19,11 @@ public class Task {
         this.isDone = isDone;
     }
 
-    public String[] getInfos() {
+    public String[] getInfos(DateTimeFormatter timeFormatter) {
         return new String[] {(isDone ? "1" : "0"), this.description};
     }
 
-    @Override
-    public String toString() {
+    public String toUiString(DateTimeFormatter timeFormatter) {
         return (isDone ? "[X] " : "[ ] ") + description;
     }
 }

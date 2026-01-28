@@ -1,5 +1,7 @@
 package elyra.task;
 
+import java.time.format.DateTimeFormatter;
+
 public class ToDo extends Task {
     public ToDo(String description) {
         super(description);
@@ -10,13 +12,13 @@ public class ToDo extends Task {
     }
 
     @Override
-    public String[] getInfos() {
-        String[] baseInfo = super.getInfos();
+    public String[] getInfos(DateTimeFormatter timeFormatter) {
+        String[] baseInfo = super.getInfos(timeFormatter);
         return new String[] {"T", baseInfo[0], baseInfo[1]};
     }
 
     @Override
-    public String toString() {
-        return "[T]" + super.toString();
+    public String toUiString(DateTimeFormatter timeFormatter) {
+        return "[T]" + super.toUiString(timeFormatter);
     }
 }

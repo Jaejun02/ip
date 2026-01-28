@@ -1,29 +1,37 @@
 package elyra.task;
 
-public class Event extends Task {
-    private final String startAt;
-    private final String endAt;
+import java.util.Locale;
 
-    public Event(String description, String startAt, String endAt) {
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+public class Event extends Task {
+    private final LocalDateTime startAt;
+    private final LocalDateTime endAt;
+
+    public Event(String description, LocalDateTime startAt, LocalDateTime endAt) {
         super(description);
         this.startAt = startAt;
         this.endAt = endAt;
     }
 
-    public Event(String description, boolean isDone, String startAt, String endAt) {
+    public Event(String description, boolean isDone, LocalDateTime startAt, LocalDateTime endAt) {
         super(description, isDone);
         this.startAt = startAt;
         this.endAt = endAt;
     }
 
     @Override
-    public String[] getInfos() {
-        String[] baseInfo = super.getInfos();
-        return new String[] {"E", baseInfo[0], baseInfo[1], this.startAt, this.endAt};
+    public String[] getInfos(DateTimeFormatter timeFormatter) {
+        String[] baseInfo = super.getInfos(timeFormatter);
+        return new String[] {"E", baseInfo[0], baseInfo[1],
+                this.startAt.format(timeFormatter), this.endAt.format(timeFormatter)};
     }
 
     @Override
-    public String toString() {
-        return "[E]" + super.toString() + " (from: " + this.startAt + " to: " + this.endAt + ")";
+    public String toUiString(DateTimeFormatter timeFormatter) {
+        return "[E]" + super.toUiString(timeFormatter)
+                + " (from: " + this.startAt.format(timeFormatter) + " to: "
+                + this.endAt.format(timeFormatter) + ")";
     }
 }

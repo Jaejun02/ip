@@ -1,6 +1,9 @@
 package elyra.ui;
 
+import java.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.stream.IntStream;
 
 import elyra.task.Task;
@@ -10,6 +13,8 @@ public class Ui {
     private final String splitter = "-".repeat(60);
     private final String indentation = " ".repeat(4);
     private final String smallIndentation = " ".repeat(2);
+    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern(
+            "MMM dd uuuu, h:mm a", Locale.ENGLISH);
 
     private void formatPrint(String message) {
         System.out.println(this.indentation + this.splitter);
@@ -42,7 +47,7 @@ public class Ui {
         }
 
         String[] formattedUserInputs = IntStream.range(0, tasks.size())
-                .mapToObj(i -> (i + 1) + ". " + tasks.get(i).toString())
+                .mapToObj(i -> (i + 1) + ". " + tasks.get(i).toUiString(this.timeFormatter))
                 .toArray(String[]::new);
         formatPrint(formattedUserInputs);
 
@@ -50,27 +55,27 @@ public class Ui {
 
     public void confirmAddition(Task newTask, TaskList tasks) {
         String[] confirmation = {"Got it! I have added this task:",
-                smallIndentation + newTask.toString(),
+                smallIndentation + newTask.toUiString(this.timeFormatter),
                 "Now you have " + tasks.getTasks().size() + " tasks in the list."};
         formatPrint(confirmation);
     }
 
     public void confirmDeletion(Task removedTask, TaskList tasks) {
         String[] confirmation = {"Noted! I have removed this task:",
-                smallIndentation + removedTask.toString(),
+                smallIndentation + removedTask.toUiString(this.timeFormatter),
                 "Now you have " + tasks.getTasks().size() + " tasks in the list."};
         formatPrint(confirmation);
     }
 
     public void confirmMark(Task markedTask) {
         String[] confirmation = {"Good job! I have marked this task as done!",
-                smallIndentation + markedTask.toString()};
+                smallIndentation + markedTask.toUiString(this.timeFormatter)};
         formatPrint(confirmation);
     }
 
     public void confirmUnmark(Task unmarkedTask) {
         String[] confirmation = {"Alright! I have marked this task as not done yet.",
-                smallIndentation + unmarkedTask.toString()};
+                smallIndentation + unmarkedTask.toUiString(this.timeFormatter)};
         formatPrint(confirmation);
     }
 
