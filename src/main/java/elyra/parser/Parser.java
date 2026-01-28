@@ -2,6 +2,11 @@ package elyra.parser;
 
 import java.util.Arrays;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
+
 import elyra.command.Command;
 import elyra.command.ByeCommand;
 import elyra.command.ListCommand;
@@ -103,9 +108,9 @@ public class Parser {
             throw new IllegalArgumentException(message);
         } else {
             String description = parts[0].trim();
-            String by = parts[1].trim();
-            if (description.isEmpty() || by.isEmpty()) {
-                String message = "The 'deadline' command requires a non-empty description and due date!";
+            LocalDateTime by = parseDateTime(parts[1].trim());
+            if (description.isEmpty()) {
+                String message = "The 'deadline' command requires a non-empty description!";
                 throw new IllegalArgumentException(message);
             }
             return new AddDeadlineCommand(description, by);
@@ -120,10 +125,10 @@ public class Parser {
             throw new IllegalArgumentException(message);
         } else {
             String description = parts[0].trim();
-            String from = parts[1].trim();
-            String to = parts[2].trim();
-            if (description.isEmpty() || from.isEmpty() || to.isEmpty()) {
-                String message = "The 'event' command requires a non-empty description, start time, and end time!";
+            LocalDateTime from = parseDateTime(parts[1].trim());
+            LocalDateTime to = parseDateTime(parts[2].trim());
+            if (description.isEmpty()) {
+                String message = "The 'event' command requires a non-empty description!";
                 throw new IllegalArgumentException(message);
             }
             return new AddEventCommand(description, from, to);
@@ -142,6 +147,17 @@ public class Parser {
                 String message = "The 'delete' command requires a numeric argument!";
                 throw new IllegalArgumentException(message);
             }
+        }
+    }
+
+    private LocalDateTime parseDateTime(String dateTimeStr) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm")
+                .withResolverStyle(ResolverStyle.STRICT);
+        try {
+            return LocalDateTime.parse(dateTimeStr, formatter);
+        } catch (DateTimeParseException e) {
+            String message = "Invalid date/time format! Please use 'yyyy-MM-dd HH:mm'.";
+            throw new IllegalArgumentException(message);
         }
     }
 

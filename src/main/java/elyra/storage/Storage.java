@@ -1,6 +1,12 @@
 package elyra.storage;
 
+import java.util.Locale;
 import java.util.regex.Pattern;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 
 import elyra.task.Task;
 import elyra.task.TaskList;
@@ -19,6 +25,8 @@ public class Storage {
     public static final String DEFAULT_PATH = "./data/elyra.txt";
     public static final String DELIM = " ||| ";
     private static final String DELIM_REGEX = Pattern.quote(DELIM);
+    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
+            .withResolverStyle(ResolverStyle.STRICT);
 
     private final Path filePath;
 
@@ -81,7 +89,7 @@ public class Storage {
                         lineNumber);
                 throw new IOException(errorMessage);
             }
-            String by = parts[3];
+            LocalDateTime by = parseDateTime(parts[3].trim(), lineNumber);
             return new Deadline(description, isDone, by);
         case "E":
             if (parts.length < 5) {
@@ -89,8 +97,8 @@ public class Storage {
                         lineNumber);
                 throw new IOException(errorMessage);
             }
-            String from = parts[3];
-            String to = parts[4];
+            LocalDateTime from = parseDateTime(parts[3].trim(), lineNumber);
+            LocalDateTime to = parseDateTime(parts[4].trim(), lineNumber);
             return new Event(description, isDone, from, to);
         default:
             String errorMessage = String.format("Found corrupted data at line %d (unknown task type): '%s'",
@@ -111,8 +119,18 @@ public class Storage {
         }
     }
 
+    private LocalDateTime parseDateTime(String dateTimeStr, int lineNumber) throws IOException {
+        try {
+            return LocalDateTime.parse(dateTimeStr, this.timeFormatter);
+        } catch (DateTimeParseException e) {
+            String errorMessage = String.format("Found corrupted data at line %d (invalid date & time format).",
+                    lineNumber);
+            throw new IOException(errorMessage);
+        }
+    }
+
     private String serializeTask(Task task) {
-        String[] taskInfos = task.getInfos();
+        String[] taskInfos = task.getInfos(this.timeFormatter);
         return String.join(DELIM, taskInfos);
     }
 }

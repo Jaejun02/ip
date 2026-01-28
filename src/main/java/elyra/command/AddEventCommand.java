@@ -2,12 +2,14 @@ package elyra.command;
 
 import elyra.task.Event;
 
+import java.time.LocalDateTime;
+
 public class AddEventCommand implements Command {
     private final String description;
-    private final String startAt;
-    private final String endAt;
+    private final LocalDateTime startAt;
+    private final LocalDateTime endAt;
 
-    public AddEventCommand(String description, String startAt, String endAt) {
+    public AddEventCommand(String description, LocalDateTime startAt, LocalDateTime endAt) {
         this.description = description;
         this.startAt = startAt;
         this.endAt = endAt;
