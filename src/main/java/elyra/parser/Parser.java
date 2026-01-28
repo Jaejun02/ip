@@ -11,9 +11,12 @@ import elyra.command.AddTodoCommand;
 import elyra.command.AddDeadlineCommand;
 import elyra.command.AddEventCommand;
 import elyra.command.DeleteCommand;
+import elyra.storage.Storage;
 
 public class Parser {
     public Command parseCommand(String userInput) {
+        invalidateDelimiter(userInput);
+
         String[] inputTokens = userInput.trim().split("\\s+");
         String commandWord = inputTokens[0].toLowerCase();
 
@@ -139,6 +142,14 @@ public class Parser {
                 String message = "The 'delete' command requires a numeric argument!";
                 throw new IllegalArgumentException(message);
             }
+        }
+    }
+
+    private void invalidateDelimiter(String userInput) {
+        if (userInput.contains(Storage.DELIM.strip())) {
+            String message = "'" + Storage.DELIM.strip()
+                    + "' is reserved and cannot be used in task descriptions!";
+            throw new IllegalArgumentException(message);
         }
     }
 }
