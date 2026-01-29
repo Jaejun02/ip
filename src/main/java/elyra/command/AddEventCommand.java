@@ -1,8 +1,8 @@
 package elyra.command;
 
-import elyra.task.Event;
-
 import java.time.LocalDateTime;
+
+import elyra.task.Event;
 
 /**
  * Represents a command to add an event task.

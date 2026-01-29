@@ -1,9 +1,8 @@
 package elyra.task;
 
-import java.util.Locale;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 /**
  * Represents a deadline task.

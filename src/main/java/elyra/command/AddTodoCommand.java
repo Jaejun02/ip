@@ -5,7 +5,7 @@ import elyra.task.ToDo;
 /**
  * Represents a command to add a todo task.
  */
-public class AddTodoCommand implements Command{
+public class AddTodoCommand implements Command {
     private final String description;
 
     /**

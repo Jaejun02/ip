@@ -1,21 +1,20 @@
 package elyra.parser;
 
-import java.util.Arrays;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
+import java.util.Arrays;
 
-import elyra.command.Command;
+import elyra.command.AddDeadlineCommand;
+import elyra.command.AddEventCommand;
+import elyra.command.AddTodoCommand;
 import elyra.command.ByeCommand;
+import elyra.command.Command;
+import elyra.command.DeleteCommand;
 import elyra.command.ListCommand;
 import elyra.command.MarkCommand;
 import elyra.command.UnmarkCommand;
-import elyra.command.AddTodoCommand;
-import elyra.command.AddDeadlineCommand;
-import elyra.command.AddEventCommand;
-import elyra.command.DeleteCommand;
 import elyra.storage.Storage;
 
 /**
@@ -163,7 +162,7 @@ public class Parser {
 
     private LocalDateTime parseDateTime(String dateTimeStr) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm")
-                .withResolverStyle(ResolverStyle.STRICT);
+            .withResolverStyle(ResolverStyle.STRICT);
         try {
             return LocalDateTime.parse(dateTimeStr, formatter);
         } catch (DateTimeParseException e) {
@@ -175,7 +174,7 @@ public class Parser {
     private void invalidateDelimiter(String userInput) {
         if (userInput.contains(Storage.DELIM.strip())) {
             String message = "'" + Storage.DELIM.strip()
-                    + "' is reserved and cannot be used in task descriptions!";
+                + "' is reserved and cannot be used in task descriptions!";
             throw new IllegalArgumentException(message);
         }
     }

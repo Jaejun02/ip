@@ -1,7 +1,7 @@
 package elyra.command;
 
-import elyra.ui.Ui;
 import elyra.task.TaskList;
+import elyra.ui.Ui;
 
 /**
  * Represents the execution context for commands.

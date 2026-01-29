@@ -7,7 +7,7 @@ import elyra.task.Deadline;
 /**
  * Represents a command to add a deadline task.
  */
-public class AddDeadlineCommand implements Command{
+public class AddDeadlineCommand implements Command {
     private final String description;
     private final LocalDateTime by;
 

@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'application'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'checkstyle'
 }
 
 repositories {
@@ -34,6 +35,10 @@ application {
 shadowJar {
     archiveBaseName = "Elyra"
     archiveClassifier = null
+}
+
+checkstyle {
+    toolVersion = '11.0.0'
 }
 
 run{
