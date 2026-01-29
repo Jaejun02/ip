@@ -27,7 +27,7 @@ public class Storage {
     public static final String DELIM = " ||| ";
     private static final String DELIM_REGEX = Pattern.quote(DELIM);
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
-        .withResolverStyle(ResolverStyle.STRICT);
+            .withResolverStyle(ResolverStyle.STRICT);
 
     private final Path filePath;
 

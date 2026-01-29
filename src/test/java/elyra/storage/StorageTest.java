@@ -80,7 +80,7 @@ public class StorageTest {
     }
 
     @Test
-    void loadTasksTooFewFieldsThrowsIOException() throws IOException {
+    void loadTasksTooFewFieldsThrowsIoException() throws IOException {
         Path file = tempDir.resolve("tasks.txt");
         Files.writeString(file, "T" + Storage.DELIM + "1");
 
@@ -90,7 +90,7 @@ public class StorageTest {
     }
 
     @Test
-    void loadTasksInvalidDoneStatusThrowsIOException() throws IOException {
+    void loadTasksInvalidDoneStatusThrowsIoException() throws IOException {
         Path file = tempDir.resolve("tasks.txt");
         Files.writeString(file, "T" + Storage.DELIM + "X" + Storage.DELIM + "read book");
 
@@ -100,7 +100,7 @@ public class StorageTest {
     }
 
     @Test
-    void loadTasksUnknownTaskTypeThrowsIOException() throws IOException {
+    void loadTasksUnknownTaskTypeThrowsIoException() throws IOException {
         Path file = tempDir.resolve("tasks.txt");
         Files.writeString(file, "Z" + Storage.DELIM + "0" + Storage.DELIM + "read book");
 
@@ -110,7 +110,7 @@ public class StorageTest {
     }
 
     @Test
-    void loadTasksDeadlineTooFewFieldsThrowsIOException() throws IOException {
+    void loadTasksDeadlineTooFewFieldsThrowsIoException() throws IOException {
         Path file = tempDir.resolve("tasks.txt");
         Files.writeString(file, "D" + Storage.DELIM + "0" + Storage.DELIM + "submit report");
 
@@ -120,7 +120,7 @@ public class StorageTest {
     }
 
     @Test
-    void loadTasksEventTooFewFieldsThrowsIOException() throws IOException {
+    void loadTasksEventTooFewFieldsThrowsIoException() throws IOException {
         Path file = tempDir.resolve("tasks.txt");
         Files.writeString(file, "E" + Storage.DELIM + "0" + Storage.DELIM + "meeting"
                 + Storage.DELIM + "2024-03-10T09:00");
@@ -131,7 +131,7 @@ public class StorageTest {
     }
 
     @Test
-    void loadTasksInvalidDateTimeThrowsIOException() throws IOException {
+    void loadTasksInvalidDateTimeThrowsIoException() throws IOException {
         Path file = tempDir.resolve("tasks.txt");
         Files.writeString(file, "D" + Storage.DELIM + "0" + Storage.DELIM + "submit report"
                 + Storage.DELIM + "2024-13-01T12:30");

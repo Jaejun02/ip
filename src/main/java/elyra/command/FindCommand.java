@@ -13,7 +13,7 @@ public class FindCommand implements Command {
 
     public ExecutionResult execute(Context context) {
         ArrayList<Task> matchingTasks = context.tasks()
-            .findTasksByKeyword(this.keyword);
+                .findTasksByKeyword(this.keyword);
         context.ui().showMatchingTaskList(matchingTasks, this.keyword);
         return ExecutionResult.CONTINUE;
     }
