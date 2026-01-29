@@ -1,32 +1,29 @@
 package elyra.storage;
 
-import java.util.Locale;
-import java.util.regex.Pattern;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.time.format.ResolverStyle;
-
-import elyra.task.Task;
-import elyra.task.TaskList;
-import elyra.task.ToDo;
-import elyra.task.Deadline;
-import elyra.task.Event;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 import java.util.Scanner;
+import java.util.regex.Pattern;
+
+import elyra.task.Deadline;
+import elyra.task.Event;
+import elyra.task.Task;
+import elyra.task.TaskList;
+import elyra.task.ToDo;
 
 public class Storage {
     public static final String DEFAULT_PATH = "./data/elyra.txt";
     public static final String DELIM = " ||| ";
     private static final String DELIM_REGEX = Pattern.quote(DELIM);
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
-            .withResolverStyle(ResolverStyle.STRICT);
+        .withResolverStyle(ResolverStyle.STRICT);
 
     private final Path filePath;
 

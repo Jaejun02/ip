@@ -3,13 +3,13 @@ package elyra;
 import java.io.IOException;
 import java.util.Scanner;
 
-import elyra.parser.Parser;
-import elyra.task.TaskList;
 import elyra.command.Command;
 import elyra.command.Context;
 import elyra.command.ExecutionResult;
-import elyra.ui.Ui;
+import elyra.parser.Parser;
 import elyra.storage.Storage;
+import elyra.task.TaskList;
+import elyra.ui.Ui;
 
 public class Elyra {
     private final String name = "Elyra";

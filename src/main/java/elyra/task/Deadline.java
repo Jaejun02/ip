@@ -1,9 +1,8 @@
 package elyra.task;
 
-import java.util.Locale;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class Deadline extends Task {
     private final LocalDateTime by;

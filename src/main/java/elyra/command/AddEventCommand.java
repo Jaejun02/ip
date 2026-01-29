@@ -1,8 +1,8 @@
 package elyra.command;
 
-import elyra.task.Event;
-
 import java.time.LocalDateTime;
+
+import elyra.task.Event;
 
 public class AddEventCommand implements Command {
     private final String description;

@@ -2,7 +2,7 @@ package elyra.command;
 
 import elyra.task.ToDo;
 
-public class AddTodoCommand implements Command{
+public class AddTodoCommand implements Command {
     private final String description;
 
     public AddTodoCommand(String description) {

@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 import elyra.task.Deadline;
 
-public class AddDeadlineCommand implements Command{
+public class AddDeadlineCommand implements Command {
     private final String description;
     private final LocalDateTime by;
 
