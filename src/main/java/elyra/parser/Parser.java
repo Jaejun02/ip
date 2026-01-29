@@ -18,7 +18,18 @@ import elyra.command.AddEventCommand;
 import elyra.command.DeleteCommand;
 import elyra.storage.Storage;
 
+/**
+ * Represents a parser for user input commands.
+ * A Parser object converts user input strings into executable Command objects.
+ */
 public class Parser {
+    /**
+     * Parses user input into a Command object.
+     *
+     * @param userInput User input string to parse.
+     * @return Command object corresponding to the user input.
+     * @throws IllegalArgumentException If the command is unknown, invalid, or has incorrect arguments.
+     */
     public Command parseCommand(String userInput) {
         invalidateDelimiter(userInput);
 

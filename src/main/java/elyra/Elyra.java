@@ -11,6 +11,10 @@ import elyra.command.ExecutionResult;
 import elyra.ui.Ui;
 import elyra.storage.Storage;
 
+/**
+ * Represents the main chatbot application.
+ * An Elyra object handles user interactions and manages tasks through a command-based interface.
+ */
 public class Elyra {
     private final String name = "Elyra";
     private final Ui ui = new Ui();
@@ -18,6 +22,11 @@ public class Elyra {
     private final TaskList tasks;
     private final Storage storage;
 
+    /**
+     * Creates a new Elyra chatbot instance with the specified file path for data storage.
+     *
+     * @param filePath Path to the file where tasks will be stored and loaded from.
+     */
     public Elyra(String filePath) {
         this.storage = new Storage(filePath);
         TaskList loadedTasks;
@@ -30,10 +39,16 @@ public class Elyra {
         this.tasks = loadedTasks;
     }
 
+    /**
+     * Creates a new Elyra chatbot instance with the default file path for data storage.
+     */
     public Elyra() {
         this(Storage.DEFAULT_PATH);
     }
 
+    /**
+     * Runs the main chatbot loop, processing user input until exit command is received.
+     */
     public void run() {
         ui.greetUser(this.name);
 

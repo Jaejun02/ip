@@ -79,6 +79,12 @@ public class Ui {
         formatPrint(confirmation);
     }
 
+    /**
+     * Displays an error message for invalid user input.
+     *
+     * @param message Error message to display.
+     * @param userInput User input that caused the error.
+     */
     public void showUserInputErrorMessage(String message, String userInput) {
         String[] errorMessage = {"Oops! We encountered a problem!",
                 message,
@@ -87,6 +93,11 @@ public class Ui {
         formatPrint(errorMessage);
     }
 
+    /**
+     * Displays an error message when data cannot be loaded.
+     *
+     * @param message Error message to display.
+     */
     public void showLoadDataErrorMessage(String message) {
         String[] errorMessage = {"Oops! We encountered a problem!",
                 message,
@@ -95,6 +106,11 @@ public class Ui {
         formatPrint(errorMessage);
     }
 
+    /**
+     * Displays an error message when data cannot be saved.
+     *
+     * @param message Error message to display.
+     */
     public void showSaveDataErrorMessage(String message) {
         String[] errorMessage = {"Oops! We encountered a problem!",
                 message,

@@ -21,6 +21,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
+/**
+ * Represents persistent storage for tasks.
+ * A Storage object handles loading tasks from and saving tasks to a file.
+ */
 public class Storage {
     public static final String DEFAULT_PATH = "./data/elyra.txt";
     public static final String DELIM = " ||| ";
@@ -30,10 +34,21 @@ public class Storage {
 
     private final Path filePath;
 
+    /**
+     * Creates a new Storage instance with the specified file path.
+     *
+     * @param filePath Path to the file where tasks will be stored.
+     */
     public Storage(String filePath) {
         this.filePath = Paths.get(filePath);
     }
 
+    /**
+     * Loads tasks from the storage file.
+     *
+     * @return TaskList containing all tasks loaded from the file.
+     * @throws IOException If an error occurs while reading the file or data is corrupted.
+     */
     public TaskList loadTasks() throws IOException {
         if (Files.notExists(this.filePath)) {
             return new TaskList();
@@ -55,6 +70,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Saves tasks to the storage file.
+     *
+     * @param tasks TaskList containing all tasks to be saved.
+     * @throws IOException If an error occurs while writing to the file.
+     */
     public void saveTasks(TaskList tasks) throws IOException {
         Path parent = filePath.getParent();
         if (parent != null) {
