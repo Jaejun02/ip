@@ -29,6 +29,21 @@ public class Ui {
         System.out.println(this.indentation + this.splitter);
     }
 
+    private void formatPrint(String header, String[] messages) {
+        System.out.println(this.indentation + this.splitter);
+        System.out.println(this.indentation + header);
+        for (String message : messages) {
+            System.out.println(this.indentation + message);
+        }
+        System.out.println(this.indentation + this.splitter);
+    }
+
+    private String[] formatTaskList(ArrayList<Task> tasks) {
+        return IntStream.range(0, tasks.size())
+            .mapToObj(i -> (i + 1) + ". " + tasks.get(i).toUiString(this.timeFormatter))
+            .toArray(String[]::new);
+    }
+
     public void greetUser(String name) {
         String[] greeting = {"Hello! I am " + name + ", your personal chatbot.", "What can I do for you today?"};
         formatPrint(greeting);
@@ -45,11 +60,20 @@ public class Ui {
             return;
         }
 
-        String[] formattedUserInputs = IntStream.range(0, tasks.size())
-            .mapToObj(i -> (i + 1) + ". " + tasks.get(i).toUiString(this.timeFormatter))
-            .toArray(String[]::new);
-        formatPrint(formattedUserInputs);
+        String header = "Here are your tasks:";
+        String[] formattedUserInputs = formatTaskList(tasks);
+        formatPrint(header, formattedUserInputs);
+    }
 
+    public void showMatchingTaskList(ArrayList<Task> tasks, String keyword) {
+        if (tasks.isEmpty()) {
+            formatPrint("There are no tasks matching the keyword: '" + keyword + "'");
+            return;
+        }
+
+        String header = "Here are the matching tasks:";
+        String[] formattedUserInputs = formatTaskList(tasks);
+        formatPrint(header, formattedUserInputs);
     }
 
     public void confirmAddition(Task newTask, TaskList tasks) {
