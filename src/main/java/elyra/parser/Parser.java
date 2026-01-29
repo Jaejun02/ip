@@ -16,6 +16,7 @@ import elyra.command.AddTodoCommand;
 import elyra.command.AddDeadlineCommand;
 import elyra.command.AddEventCommand;
 import elyra.command.DeleteCommand;
+import elyra.command.FindCommand;
 import elyra.storage.Storage;
 
 public class Parser {
@@ -34,6 +35,7 @@ public class Parser {
             case "deadline" -> parseDeadlineCommand(inputTokens);
             case "event" -> parseEventCommand(inputTokens);
             case "delete" -> parseDeleteCommand(inputTokens);
+            case "find" -> parseFindCommand(inputTokens);
             default -> {
                 String message = "I'm sorry, but I don't recognize the command provided!";
                 throw new IllegalArgumentException(message);
@@ -147,6 +149,16 @@ public class Parser {
                 String message = "The 'delete' command requires a numeric argument!";
                 throw new IllegalArgumentException(message);
             }
+        }
+    }
+
+    private Command parseFindCommand(String[] inputTokens) {
+        if (inputTokens.length < 2) {
+            String message = "The 'find' command requires a keyword (or phrase) to search for!";
+            throw new IllegalArgumentException(message);
+        } else {
+            String keyword = String.join(" ", Arrays.copyOfRange(inputTokens, 1, inputTokens.length));
+            return new FindCommand(keyword);
         }
     }
 
