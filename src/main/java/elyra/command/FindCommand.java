@@ -15,6 +15,6 @@ public class FindCommand implements Command {
         ArrayList<Task> matchingTasks = context.tasks()
                 .findTasksByKeyword(this.keyword);
         context.ui().showMatchingTaskList(matchingTasks, this.keyword);
-        return ExecutionResult.CONTINUE;
+        return new ExecutionResult(false, false);
     }
 }

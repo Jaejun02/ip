@@ -27,6 +27,6 @@ public class AddDeadlineCommand implements Command {
         Deadline newTask = new Deadline(this.description, this.by);
         context.tasks().addTask(newTask);
         context.ui().confirmAddition(newTask, context.tasks());
-        return ExecutionResult.CONTINUE;
+        return new ExecutionResult(false, true);
     }
 }

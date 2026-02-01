@@ -30,6 +30,6 @@ public class AddEventCommand implements Command {
         Event newTask = new Event(this.description, this.startAt, this.endAt);
         context.tasks().addTask(newTask);
         context.ui().confirmAddition(newTask, context.tasks());
-        return ExecutionResult.CONTINUE;
+        return new ExecutionResult(false, true);
     }
 }

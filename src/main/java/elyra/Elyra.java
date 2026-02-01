@@ -59,8 +59,10 @@ public class Elyra {
                 Command currentCommand = parser.parseCommand(userInput);
                 Context currentContext = new Context(this.ui, this.tasks);
                 ExecutionResult result = currentCommand.execute(currentContext);
-                storage.saveTasks(this.tasks);
-                if (result == ExecutionResult.EXIT) {
+                if (result.isSave()) {
+                    storage.saveTasks(this.tasks);
+                }
+                if (result.isExit()) {
                     break;
                 }
             } catch (IllegalArgumentException | IndexOutOfBoundsException err) {

@@ -22,7 +22,7 @@ public class MarkCommand implements Command {
         context.tasks().markTask(index);
         Task markedTask = context.tasks().getTask(index);
         context.ui().confirmMark(markedTask);
-        return ExecutionResult.CONTINUE;
+        return new ExecutionResult(false, true);
     }
 
 }
