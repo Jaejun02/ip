@@ -20,7 +20,7 @@ public class DeleteCommand implements Command {
     @Override
     public ExecutionResult execute(Context context) {
         Task removedTask = context.tasks().deleteTask(this.index);
-        context.ui().confirmDeletion(removedTask, context.tasks());
-        return new ExecutionResult(false, true);
+        String response = context.ui().confirmDeletion(removedTask, context.tasks());
+        return new ExecutionResult(false, true, response);
     }
 }

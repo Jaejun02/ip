@@ -21,8 +21,8 @@ public class UnmarkCommand implements Command {
     public ExecutionResult execute(Context context) {
         context.tasks().unmarkTask(index);
         Task unmarkedTask = context.tasks().getTask(index);
-        context.ui().confirmUnmark(unmarkedTask);
-        return new ExecutionResult(false, true);
+        String response = context.ui().confirmUnmark(unmarkedTask);
+        return new ExecutionResult(false, true, response);
     }
 
 }

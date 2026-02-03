@@ -1,0 +1,19 @@
+.label {
+    -fx-background-color: #334155; /* slate-700 */
+    -fx-text-fill: #f8fafc;        /* slate-50 */
+
+    -fx-border-color: #64748b;     /* slate-500 */
+    -fx-border-width: 1px;
+
+    -fx-background-radius: 1em 1em 0 1em;
+    -fx-border-radius: 1em 1em 0 1em;
+}
+
+/* Other side slightly lighter so you can visually scan */
+.reply-label {
+    -fx-background-color: #475569; /* slate-600 */
+    -fx-text-fill: #f8fafc;
+    -fx-border-color: #14b8a6;     /* teal-500 */
+    -fx-background-radius: 1em 1em 1em 0;
+    -fx-border-radius: 1em 1em 1em 0;
+}
