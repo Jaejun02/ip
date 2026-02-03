@@ -45,6 +45,10 @@ public class Elyra {
         this(Storage.DEFAULT_PATH);
     }
 
+    public String getGreeting() {
+        return ui.greetUser(this.name);
+    }
+
     public ExecutionResult getResponse(String userInput) {
         ExecutionResult result;
         try {
