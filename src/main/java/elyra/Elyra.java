@@ -46,6 +46,25 @@ public class Elyra {
         this(Storage.DEFAULT_PATH);
     }
 
+    public ExecutionResult getResponse(String userInput) {
+        ExecutionResult result;
+        try {
+            Command currentCommand = parser.parseCommand(userInput);
+            Context currentContext = new Context(this.ui, this.tasks);
+            result = currentCommand.execute(currentContext);
+            if (result.isSave()) {
+                storage.saveTasks(this.tasks);
+            }
+        } catch (IllegalArgumentException | IndexOutOfBoundsException err) {
+            String response = ui.showUserInputErrorMessage(err.getMessage(), userInput);
+            result = new ExecutionResult(false, false, response);
+        } catch (IOException err) {
+            String response = ui.showSaveDataErrorMessage(err.getMessage());
+            result = new ExecutionResult(false, false, response);
+        }
+        return result;
+    }
+
     /**
      * Runs the main chatbot loop, processing user input until exit command is received.
      */
