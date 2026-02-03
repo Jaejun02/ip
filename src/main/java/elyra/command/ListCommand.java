@@ -6,7 +6,7 @@ package elyra.command;
 public class ListCommand implements Command {
     @Override
     public ExecutionResult execute(Context context) {
-        context.ui().showUserInputList(context.tasks().getTasks());
-        return new ExecutionResult(false, false);
+        String response = context.ui().showUserInputList(context.tasks().getTasks());
+        return new ExecutionResult(false, false, response);
     }
 }

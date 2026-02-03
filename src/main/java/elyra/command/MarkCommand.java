@@ -21,8 +21,8 @@ public class MarkCommand implements Command {
     public ExecutionResult execute(Context context) {
         context.tasks().markTask(index);
         Task markedTask = context.tasks().getTask(index);
-        context.ui().confirmMark(markedTask);
-        return new ExecutionResult(false, true);
+        String response = context.ui().confirmMark(markedTask);
+        return new ExecutionResult(false, true, response);
     }
 
 }

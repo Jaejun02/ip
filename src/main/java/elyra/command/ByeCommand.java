@@ -6,8 +6,8 @@ package elyra.command;
 public class ByeCommand implements Command {
     @Override
     public ExecutionResult execute(Context context) {
-        context.ui().bidFarewell();
-        return new ExecutionResult(true, false);
+        String response = context.ui().bidFarewell();
+        return new ExecutionResult(true, false, response);
     }
 
 }

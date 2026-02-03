@@ -21,7 +21,7 @@ public class AddTodoCommand implements Command {
     public ExecutionResult execute(Context context) {
         ToDo newTask = new ToDo(this.description);
         context.tasks().addTask(newTask);
-        context.ui().confirmAddition(newTask, context.tasks());
-        return new ExecutionResult(false, true);
+        String response = context.ui().confirmAddition(newTask, context.tasks());
+        return new ExecutionResult(false, true, response);
     }
 }
