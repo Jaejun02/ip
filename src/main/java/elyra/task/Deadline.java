@@ -36,12 +36,18 @@ public class Deadline extends Task {
         this.by = by;
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public String[] getInfos(DateTimeFormatter timeFormatter) {
         String[] baseInfo = super.getInfos(timeFormatter);
         return new String[] {"D", baseInfo[0], baseInfo[1], this.by.format(timeFormatter)};
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public String toUiString(DateTimeFormatter timeFormatter) {
         return "[D]" + super.toUiString(timeFormatter)

@@ -56,6 +56,13 @@ public class TaskList {
         this.tasks.remove(index - 1);
         return removedTask;
     }
+
+    /**
+     * Finds and returns a list of tasks that contain the specified keyword in their description.
+     *
+     * @param keyword The keyword to search for.
+     * @return An ArrayList of tasks that contain the keyword.
+     */
     public ArrayList<Task> findTasksByKeyword(String keyword) {
         ArrayList<Task> matchingTasks = new ArrayList<>();
         for (Task task : this.tasks) {

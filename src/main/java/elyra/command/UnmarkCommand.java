@@ -17,6 +17,9 @@ public class UnmarkCommand implements Command {
         this.index = index;
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public ExecutionResult execute(Context context) {
         context.tasks().unmarkTask(index);

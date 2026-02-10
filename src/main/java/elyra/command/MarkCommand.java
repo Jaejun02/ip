@@ -17,6 +17,9 @@ public class MarkCommand implements Command {
         this.index = index;
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public ExecutionResult execute(Context context) {
         context.tasks().markTask(index);

@@ -26,12 +26,18 @@ public class ToDo extends Task {
         super(description, isDone);
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public String[] getInfos(DateTimeFormatter timeFormatter) {
         String[] baseInfo = super.getInfos(timeFormatter);
         return new String[] {"T", baseInfo[0], baseInfo[1]};
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public String toUiString(DateTimeFormatter timeFormatter) {
         return "[T]" + super.toUiString(timeFormatter);

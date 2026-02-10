@@ -45,10 +45,19 @@ public class Elyra {
         this(Storage.DEFAULT_PATH);
     }
 
+    /**
+     * Returns a greeting message from Elyra.
+     */
     public String getGreeting() {
         return ui.greetUser(this.name);
     }
 
+    /**
+     * Processes the user input and returns the corresponding response.
+     *
+     * @param userInput The input string from the user.
+     * @return An ExecutionResult containing the response and execution status.
+     */
     public ExecutionResult getResponse(String userInput) {
         ExecutionResult result;
         try {

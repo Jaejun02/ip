@@ -25,6 +25,9 @@ public class AddEventCommand implements Command {
         this.endAt = endAt;
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public ExecutionResult execute(Context context) {
         Event newTask = new Event(this.description, this.startAt, this.endAt);

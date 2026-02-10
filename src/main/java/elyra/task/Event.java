@@ -38,6 +38,9 @@ public class Event extends Task {
         this.endAt = endAt;
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public String[] getInfos(DateTimeFormatter timeFormatter) {
         String[] baseInfo = super.getInfos(timeFormatter);
@@ -45,6 +48,9 @@ public class Event extends Task {
                 this.startAt.format(timeFormatter), this.endAt.format(timeFormatter)};
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public String toUiString(DateTimeFormatter timeFormatter) {
         return "[E]" + super.toUiString(timeFormatter)

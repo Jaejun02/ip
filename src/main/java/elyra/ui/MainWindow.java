@@ -31,12 +31,13 @@ public class MainWindow extends AnchorPane {
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/User.png"));
     private Image elyraImage = new Image(this.getClass().getResourceAsStream("/images/Elyra.png"));
 
+    /** Initializes the main window and binds the scroll pane to the dialog container height */
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
-    /** Injects the Duke instance */
+    /** Injects the Elyra instance with default greeting */
     public void setElyra(Elyra elyra) {
         this.elyra = elyra;
         dialogContainer.getChildren().add(DialogBox.getDukeDialog(this.elyra.getGreeting(), elyraImage));
