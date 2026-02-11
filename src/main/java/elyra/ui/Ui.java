@@ -12,8 +12,6 @@ import elyra.task.TaskList;
  * Handles user interactions by formatting messages for display.
  */
 public class Ui {
-    private final String splitter = "-".repeat(60);
-    private final String indentation = " ".repeat(4);
     private final String smallIndentation = " ".repeat(2);
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern(
             "MMM dd uuuu, h:mm a", Locale.ENGLISH);

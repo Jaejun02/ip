@@ -10,8 +10,6 @@ import java.util.Locale;
  */
 public class Deadline extends Task {
     private final LocalDateTime by;
-    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern(
-            "MMM dd uuuu, h:mm a", Locale.ENGLISH);
 
     /**
      * Creates a new Deadline task with the specified description and due date.
