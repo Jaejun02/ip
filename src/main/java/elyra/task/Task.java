@@ -11,6 +11,8 @@ public class Task {
     }
 
     public Task(String description, boolean isDone) {
+        assert description != null : "Description cannot be null";
+        assert !description.isEmpty() : "Description cannot be empty";
         this.description = description;
         this.isDone = isDone;
     }

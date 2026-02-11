@@ -19,6 +19,9 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         try {
+            assert Main.class.getResource("/view/MainWindow.fxml") != null
+                    : "Missing resource: /view/MainWindow.fxml";
+
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);

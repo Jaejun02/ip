@@ -53,8 +53,12 @@ public class Elyra {
         ExecutionResult result;
         try {
             Command currentCommand = parser.parseCommand(userInput);
+            assert currentCommand != null : "Parser returned null Command";
+
             Context currentContext = new Context(this.ui, this.tasks);
             result = currentCommand.execute(currentContext);
+            assert result != null : "Command.execute returned null ExecutionResult";
+
             if (result.isSave()) {
                 storage.saveTasks(this.tasks);
             }
