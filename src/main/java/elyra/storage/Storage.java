@@ -88,39 +88,28 @@ public class Storage {
 
     private Task parseTaskFromLine(String line, int lineNumber) throws IOException {
         String[] parts = line.split(DELIM_REGEX);
-        if (parts.length < 3) {
-            String errorMessage = String.format("Found corrupted data at line %d (too few fields for Tasks).",
-                    lineNumber);
-            throw new IOException(errorMessage);
-        }
+        validateMinFields(parts, lineNumber);
 
         String taskType = parts[0];
         boolean isDone = parseDoneStatus(parts[1], lineNumber);
         String description = parts[2];
 
-        switch (taskType) {
-        case "T":
-            return new ToDo(description, isDone);
-        case "D":
-            if (parts.length < 4) {
-                String errorMessage = String.format("Found corrupted data at line %d (too few fields for Deadline).",
-                        lineNumber);
+        return switch (taskType) {
+            case "T" -> parseToDo(description, isDone);
+            case "D" -> parseDeadline(parts, description, isDone, lineNumber);
+            case "E" -> parseEvent(parts, description, isDone, lineNumber);
+            default -> {
+                String errorMessage = String.format("Found corrupted data at line %d (unknown task type): '%s'",
+                        lineNumber, taskType);
                 throw new IOException(errorMessage);
             }
-            LocalDateTime by = parseDateTime(parts[3].trim(), lineNumber);
-            return new Deadline(description, isDone, by);
-        case "E":
-            if (parts.length < 5) {
-                String errorMessage = String.format("Found corrupted data at line %d (too few fields for Event).",
-                        lineNumber);
-                throw new IOException(errorMessage);
-            }
-            LocalDateTime from = parseDateTime(parts[3].trim(), lineNumber);
-            LocalDateTime to = parseDateTime(parts[4].trim(), lineNumber);
-            return new Event(description, isDone, from, to);
-        default:
-            String errorMessage = String.format("Found corrupted data at line %d (unknown task type): '%s'",
-                    lineNumber, taskType);
+        };
+    }
+
+    private void validateMinFields(String[] parts, int lineNumber) throws IOException {
+        if (parts.length < 3) {
+            String errorMessage = String.format("Found corrupted data at line %d (too few fields for Tasks).",
+                    lineNumber);
             throw new IOException(errorMessage);
         }
     }
@@ -135,6 +124,33 @@ public class Storage {
                     lineNumber, isDone);
             throw new IOException(errorMessage);
         }
+    }
+
+    private Task parseToDo(String description, boolean isDone) {
+        return new ToDo(description, isDone);
+    }
+
+    private Task parseDeadline(String[] parts, String description,
+                               boolean isDone, int lineNumber) throws IOException {
+        if (parts.length < 4) {
+            String errorMessage = String.format("Found corrupted data at line %d (too few fields for Deadline).",
+                    lineNumber);
+            throw new IOException(errorMessage);
+        }
+        LocalDateTime by = parseDateTime(parts[3].trim(), lineNumber);
+        return new Deadline(description, isDone, by);
+    }
+
+    private Task parseEvent(String[] parts, String description,
+                            boolean isDone, int lineNumber) throws IOException {
+        if (parts.length < 5) {
+            String errorMessage = String.format("Found corrupted data at line %d (too few fields for Event).",
+                    lineNumber);
+            throw new IOException(errorMessage);
+        }
+        LocalDateTime from = parseDateTime(parts[3].trim(), lineNumber);
+        LocalDateTime to = parseDateTime(parts[4].trim(), lineNumber);
+        return new Event(description, isDone, from, to);
     }
 
     private LocalDateTime parseDateTime(String dateTimeStr, int lineNumber) throws IOException {
