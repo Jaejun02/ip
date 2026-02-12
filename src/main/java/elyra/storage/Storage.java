@@ -78,6 +78,9 @@ public class Storage {
      * @throws IOException If an error occurs while writing to the file.
      */
     public void saveTasks(TaskList tasks) throws IOException {
+        assert tasks != null : "saveTasks called with null TaskList";
+        assert tasks.getTasks() != null : "TaskList.getTasks() returned null";
+
         Path parent = filePath.getParent();
         if (parent != null) {
             Files.createDirectories(parent);
@@ -171,7 +174,17 @@ public class Storage {
     }
 
     private String serializeTask(Task task) {
+        assert task != null : "Task to serialize should not be null";
+
         String[] taskInfos = task.getInfos(this.timeFormatter);
+        assert taskInfos != null : "task.getInfos returned null";
+        assert taskInfos.length >= 3 : "Serialized task must have at least 3 fields (type, done, desc)";
+        assert taskInfos[0].equals("T") || taskInfos[0].equals("D") || taskInfos[0].equals("E")
+                : "Unknown task type (" + taskInfos[0] + ") in serialized task";
+        for (String field : taskInfos) {
+            assert field != null : "Serialized task's field should not be null";
+            assert !field.contains(DELIM) : "Field contains reserved delimiter: " + field;
+        }
         return String.join(DELIM, taskInfos);
     }
 }

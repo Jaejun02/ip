@@ -9,6 +9,7 @@ public class TaskList {
     private final ArrayList<Task> tasks = new ArrayList<>();
 
     public void addTask(Task task) {
+        assert task != null : "Attempted to add null task";
         this.tasks.add(task);
     }
 

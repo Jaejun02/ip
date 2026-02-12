@@ -3,6 +3,7 @@ package elyra.ui;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.stream.IntStream;
 
 import elyra.task.Task;
@@ -17,6 +18,8 @@ public class Ui {
             "MMM dd uuuu, h:mm a", Locale.ENGLISH);
 
     private String[] formatTaskList(ArrayList<Task> tasks) {
+        assert tasks != null : "formatTaskList should not receive null tasks list";
+        assert tasks.stream().allMatch(Objects::nonNull) : "Task list contains null entries";
         return IntStream.range(0, tasks.size())
             .mapToObj(i -> (i + 1) + ". " + tasks.get(i).toUiString(this.timeFormatter))
             .toArray(String[]::new);
