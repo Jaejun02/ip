@@ -54,9 +54,9 @@ public class DialogBox extends HBox {
     }
 
     /**
-     * Creates a dialog box for Duke's responses with the image on the left.
+     * Creates a dialog box for Elyra's responses with the image on the left.
      */
-    public static DialogBox getDukeDialog(String text, Image img) {
+    public static DialogBox getElyraDialog(String text, Image img) {
         var db = new DialogBox(text, img);
         db.flip();
         return db;

@@ -40,15 +40,15 @@ public class MainWindow extends AnchorPane {
     /** Injects the Elyra instance with default greeting */
     public void setElyra(Elyra elyra) {
         this.elyra = elyra;
-        dialogContainer.getChildren().add(DialogBox.getDukeDialog(this.elyra.getGreeting(), elyraImage));
+        dialogContainer.getChildren().add(DialogBox.getElyraDialog(this.elyra.getGreeting(), elyraImage));
         if (elyra.haveLoadError()) {
-            dialogContainer.getChildren().add(DialogBox.getDukeDialog(this.elyra.getLoadDataErrorMessage(),
+            dialogContainer.getChildren().add(DialogBox.getElyraDialog(this.elyra.getLoadDataErrorMessage(),
                     elyraImage));
         }
     }
 
     /**
-     * Creates two dialog boxes, one echoing user input and the other containing Duke's reply and then appends them to
+     * Creates two dialog boxes, one echoing user input and the other containing Elyra's reply and then appends them to
      * the dialog container. Clears the user input after processing.
      */
     @FXML
@@ -57,7 +57,7 @@ public class MainWindow extends AnchorPane {
         ExecutionResult result = elyra.getResponse(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(result.response(), elyraImage)
+                DialogBox.getElyraDialog(result.response(), elyraImage)
         );
         userInput.clear();
 

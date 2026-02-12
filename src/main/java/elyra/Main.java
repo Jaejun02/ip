@@ -27,7 +27,7 @@ public class Main extends Application {
             stage.setMinHeight(stageMinHeight);
             int stageMinWidth = 417;
             stage.setMinWidth(stageMinWidth);
-            fxmlLoader.<MainWindow>getController().setElyra(elyra); // inject the Duke instance
+            fxmlLoader.<MainWindow>getController().setElyra(elyra); // inject the Elyra instance
 
             stage.show();
         } catch (IOException e) {
