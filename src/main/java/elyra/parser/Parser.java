@@ -60,32 +60,29 @@ public class Parser {
         if (inputTokens.length > 1) {
             String message = "The 'bye' command does not take any arguments!";
             throw new IllegalArgumentException(message);
-        } else {
-            return new ByeCommand();
         }
+        return new ByeCommand();
     }
 
     private Command parseListCommand(String[] inputTokens) {
         if (inputTokens.length > 1) {
             String message = "The 'list' command does not take any arguments!";
             throw new IllegalArgumentException(message);
-        } else {
-            return new ListCommand();
         }
+        return new ListCommand();
     }
 
     private Command parseMarkCommand(String[] inputTokens) {
         if (inputTokens.length != 2) {
             String message = "The 'mark' command requires exactly one argument!";
             throw new IllegalArgumentException(message);
-        } else {
-            try {
-                int index = Integer.parseInt(inputTokens[1]);
-                return new MarkCommand(index);
-            } catch (NumberFormatException e) {
-                String message = "The 'mark' command requires a numeric argument!";
-                throw new IllegalArgumentException(message);
-            }
+        }
+        try {
+            int index = Integer.parseInt(inputTokens[1]);
+            return new MarkCommand(index);
+        } catch (NumberFormatException e) {
+            String message = "The 'mark' command requires a numeric argument!";
+            throw new IllegalArgumentException(message);
         }
     }
 
@@ -93,14 +90,13 @@ public class Parser {
         if (inputTokens.length != 2) {
             String message = "The 'unmark' command requires exactly one argument!";
             throw new IllegalArgumentException(message);
-        } else {
-            try {
-                int index = Integer.parseInt(inputTokens[1]);
-                return new UnmarkCommand(index);
-            } catch (NumberFormatException e) {
-                String message = "The 'unmark' command requires a numeric argument!";
-                throw new IllegalArgumentException(message);
-            }
+        }
+        try {
+            int index = Integer.parseInt(inputTokens[1]);
+            return new UnmarkCommand(index);
+        } catch (NumberFormatException e) {
+            String message = "The 'unmark' command requires a numeric argument!";
+            throw new IllegalArgumentException(message);
         }
     }
 
@@ -108,10 +104,9 @@ public class Parser {
         if (inputTokens.length < 2) {
             String message = "The 'todo' command requires a description!";
             throw new IllegalArgumentException(message);
-        } else {
-            String description = String.join(" ", Arrays.copyOfRange(inputTokens, 1, inputTokens.length));
-            return new AddTodoCommand(description);
         }
+        String description = String.join(" ", Arrays.copyOfRange(inputTokens, 1, inputTokens.length));
+        return new AddTodoCommand(description);
     }
 
     private Command parseDeadlineCommand(String[] inputTokens) {
@@ -120,15 +115,14 @@ public class Parser {
         if (parts.length != 2) {
             String message = "The 'deadline' command requires a description and a due date!";
             throw new IllegalArgumentException(message);
-        } else {
-            String description = parts[0].trim();
-            LocalDateTime by = parseDateTime(parts[1].trim());
-            if (description.isEmpty()) {
-                String message = "The 'deadline' command requires a non-empty description!";
-                throw new IllegalArgumentException(message);
-            }
-            return new AddDeadlineCommand(description, by);
         }
+        String description = parts[0].trim();
+        LocalDateTime by = parseDateTime(parts[1].trim());
+        if (description.isEmpty()) {
+            String message = "The 'deadline' command requires a non-empty description!";
+            throw new IllegalArgumentException(message);
+        }
+        return new AddDeadlineCommand(description, by);
     }
 
     private Command parseEventCommand(String[] inputTokens) {
@@ -139,30 +133,28 @@ public class Parser {
         if (parts.length != 3) {
             String message = "The 'event' command requires a description, start time, and end time!";
             throw new IllegalArgumentException(message);
-        } else {
-            String description = parts[0].trim();
-            LocalDateTime from = parseDateTime(parts[1].trim());
-            LocalDateTime to = parseDateTime(parts[2].trim());
-            if (description.isEmpty()) {
-                String message = "The 'event' command requires a non-empty description!";
-                throw new IllegalArgumentException(message);
-            }
-            return new AddEventCommand(description, from, to);
         }
+        String description = parts[0].trim();
+        LocalDateTime from = parseDateTime(parts[1].trim());
+        LocalDateTime to = parseDateTime(parts[2].trim());
+        if (description.isEmpty()) {
+            String message = "The 'event' command requires a non-empty description!";
+            throw new IllegalArgumentException(message);
+        }
+        return new AddEventCommand(description, from, to);
     }
 
     private Command parseDeleteCommand(String[] inputTokens) {
         if (inputTokens.length != 2) {
             String message = "The 'delete' command requires exactly one argument!";
             throw new IllegalArgumentException(message);
-        } else {
-            try {
-                int index = Integer.parseInt(inputTokens[1]);
-                return new DeleteCommand(index);
-            } catch (NumberFormatException e) {
-                String message = "The 'delete' command requires a numeric argument!";
-                throw new IllegalArgumentException(message);
-            }
+        }
+        try {
+            int index = Integer.parseInt(inputTokens[1]);
+            return new DeleteCommand(index);
+        } catch (NumberFormatException e) {
+            String message = "The 'delete' command requires a numeric argument!";
+            throw new IllegalArgumentException(message);
         }
     }
 
@@ -170,10 +162,9 @@ public class Parser {
         if (inputTokens.length < 2) {
             String message = "The 'find' command requires a keyword (or phrase) to search for!";
             throw new IllegalArgumentException(message);
-        } else {
-            String keyword = String.join(" ", Arrays.copyOfRange(inputTokens, 1, inputTokens.length));
-            return new FindCommand(keyword);
         }
+        String keyword = String.join(" ", Arrays.copyOfRange(inputTokens, 1, inputTokens.length));
+        return new FindCommand(keyword);
     }
 
     private Command parseUpdateCommand(String[] inputTokens) {
@@ -184,25 +175,25 @@ public class Parser {
         if (parts.length != 3) {
             String message = "The 'update' command requires a task index, field name, and new content!";
             throw new IllegalArgumentException(message);
-        } else {
-            try {
-                int index = Integer.parseInt(parts[0].trim());
-                String fieldName = parts[1].trim();
-                String newContent = parts[2].trim();
-                assert !fieldName.isEmpty() : "Field name should not be empty string here.";
-                assert !newContent.isEmpty() : "New content should not be empty string here.";
-                boolean isDateTimeField = fieldName.equalsIgnoreCase("by")
-                        || fieldName.equalsIgnoreCase("from")
-                        || fieldName.equalsIgnoreCase("to");
-                if (isDateTimeField) {
-                    LocalDateTime newDateTimeContent = parseDateTime(newContent);
-                    return new UpdateCommand(index, fieldName, newDateTimeContent);
-                }
-                return new UpdateCommand(index, fieldName, newContent);
-            } catch (NumberFormatException e) {
-                String message = "The 'update' command's index argument should be an integer!";
-                throw new IllegalArgumentException(message);
+        }
+        try {
+            int index = Integer.parseInt(parts[0].trim());
+            String fieldName = parts[1].trim();
+            String newContent = parts[2].trim();
+            assert !fieldName.isEmpty() : "Field name should not be empty string here.";
+            assert !newContent.isEmpty() : "New content should not be empty string here.";
+            boolean isBy = fieldName.equalsIgnoreCase("by");
+            boolean isFrom = fieldName.equalsIgnoreCase("from");
+            boolean isTo = fieldName.equalsIgnoreCase("to");
+            boolean isDateTimeField = isBy || isFrom || isTo;
+            if (isDateTimeField) {
+                LocalDateTime newDateTimeContent = parseDateTime(newContent);
+                return new UpdateCommand(index, fieldName, newDateTimeContent);
             }
+            return new UpdateCommand(index, fieldName, newContent);
+        } catch (NumberFormatException e) {
+            String message = "The 'update' command's index argument should be an integer!";
+            throw new IllegalArgumentException(message);
         }
     }
 
