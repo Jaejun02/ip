@@ -32,7 +32,7 @@ public class ToDo extends Task {
     @Override
     public String[] getInfos(DateTimeFormatter timeFormatter) {
         String[] baseInfo = super.getInfos(timeFormatter);
-        return new String[] {"T", baseInfo[0], baseInfo[1]};
+        return new String[] {TaskType.TODO.getStorageCode(), baseInfo[0], baseInfo[1]};
     }
 
     /**
@@ -40,6 +40,6 @@ public class ToDo extends Task {
      */
     @Override
     public String toUiString(DateTimeFormatter timeFormatter) {
-        return "[T]" + super.toUiString(timeFormatter);
+        return TaskType.TODO.getUiTag() + super.toUiString(timeFormatter);
     }
 }

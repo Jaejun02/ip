@@ -44,7 +44,7 @@ public class Event extends Task {
     @Override
     public String[] getInfos(DateTimeFormatter timeFormatter) {
         String[] baseInfo = super.getInfos(timeFormatter);
-        return new String[] {"E", baseInfo[0], baseInfo[1],
+        return new String[] {TaskType.EVENT.getStorageCode(), baseInfo[0], baseInfo[1],
                 this.startAt.format(timeFormatter), this.endAt.format(timeFormatter)};
     }
 
@@ -53,7 +53,7 @@ public class Event extends Task {
      */
     @Override
     public String toUiString(DateTimeFormatter timeFormatter) {
-        return "[E]" + super.toUiString(timeFormatter)
+        return TaskType.EVENT.getUiTag() + super.toUiString(timeFormatter)
                 + " (from: " + this.startAt.format(timeFormatter) + " to: "
                 + this.endAt.format(timeFormatter) + ")";
     }

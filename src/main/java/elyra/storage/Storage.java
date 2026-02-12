@@ -16,6 +16,7 @@ import elyra.task.Deadline;
 import elyra.task.Event;
 import elyra.task.Task;
 import elyra.task.TaskList;
+import elyra.task.TaskType;
 import elyra.task.ToDo;
 
 /**
@@ -28,6 +29,9 @@ public class Storage {
     private static final String DELIM_REGEX = Pattern.quote(DELIM);
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
             .withResolverStyle(ResolverStyle.STRICT);
+    private static final int MIN_TASK_FIELDS = 3;
+    private static final int MIN_DEADLINE_FIELDS = 4;
+    private static final int MIN_EVENT_FIELDS = 5;
 
     private final Path filePath;
 
@@ -94,20 +98,23 @@ public class Storage {
         boolean isDone = parseDoneStatus(parts[1], lineNumber);
         String description = parts[2];
 
-        return switch (taskType) {
-            case "T" -> parseToDo(description, isDone);
-            case "D" -> parseDeadline(parts, description, isDone, lineNumber);
-            case "E" -> parseEvent(parts, description, isDone, lineNumber);
-            default -> {
-                String errorMessage = String.format("Found corrupted data at line %d (unknown task type): '%s'",
-                        lineNumber, taskType);
-                throw new IOException(errorMessage);
-            }
-        };
+        try {
+            TaskType currentTaskType = TaskType.fromStorageCode(taskType);
+            return switch (currentTaskType) {
+                case TODO -> parseToDo(description, isDone);
+                case DEADLINE -> parseDeadline(parts, description, isDone, lineNumber);
+                case EVENT -> parseEvent(parts, description, isDone, lineNumber);
+                default -> throw new AssertionError("Unreachable state: Unknown command is parsed.");
+            };
+        } catch (IllegalArgumentException e) {
+            String errorMessage = String.format("Found corrupted data at line %d (unknown task type): '%s'",
+                    lineNumber, taskType);
+            throw new IOException(errorMessage);
+        }
     }
 
     private void validateMinFields(String[] parts, int lineNumber) throws IOException {
-        if (parts.length < 3) {
+        if (parts.length < MIN_TASK_FIELDS) {
             String errorMessage = String.format("Found corrupted data at line %d (too few fields for Tasks).",
                     lineNumber);
             throw new IOException(errorMessage);
@@ -132,7 +139,7 @@ public class Storage {
 
     private Task parseDeadline(String[] parts, String description,
                                boolean isDone, int lineNumber) throws IOException {
-        if (parts.length < 4) {
+        if (parts.length < MIN_DEADLINE_FIELDS) {
             String errorMessage = String.format("Found corrupted data at line %d (too few fields for Deadline).",
                     lineNumber);
             throw new IOException(errorMessage);
@@ -143,7 +150,7 @@ public class Storage {
 
     private Task parseEvent(String[] parts, String description,
                             boolean isDone, int lineNumber) throws IOException {
-        if (parts.length < 5) {
+        if (parts.length < MIN_EVENT_FIELDS) {
             String errorMessage = String.format("Found corrupted data at line %d (too few fields for Event).",
                     lineNumber);
             throw new IOException(errorMessage);
