@@ -31,6 +31,7 @@ public class MainWindow extends AnchorPane {
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/User.png"));
     private Image elyraImage = new Image(this.getClass().getResourceAsStream("/images/Elyra.png"));
 
+    /** Initializes the main window and binds the scroll pane to the dialog container height */
     @FXML
     public void initialize() {
         assert scrollPane != null : "scrollPane was not injected (FXML mismatch?)";
@@ -41,16 +42,20 @@ public class MainWindow extends AnchorPane {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
-    /** Injects the Duke instance */
+    /** Injects the Elyra instance with default greeting */
     public void setElyra(Elyra elyra) {
         assert elyra != null : "setElyra called with null";
         assert this.elyra == null : "setElyra should only be called once";
         this.elyra = elyra;
-        dialogContainer.getChildren().add(DialogBox.getDukeDialog(this.elyra.getGreeting(), elyraImage));
+        dialogContainer.getChildren().add(DialogBox.getElyraDialog(this.elyra.getGreeting(), elyraImage));
+        if (elyra.haveLoadError()) {
+            dialogContainer.getChildren().add(DialogBox.getElyraDialog(this.elyra.getLoadDataErrorMessage(),
+                    elyraImage));
+        }
     }
 
     /**
-     * Creates two dialog boxes, one echoing user input and the other containing Duke's reply and then appends them to
+     * Creates two dialog boxes, one echoing user input and the other containing Elyra's reply and then appends them to
      * the dialog container. Clears the user input after processing.
      */
     @FXML
@@ -65,12 +70,13 @@ public class MainWindow extends AnchorPane {
 
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(result.response(), elyraImage)
+                DialogBox.getElyraDialog(result.response(), elyraImage)
         );
         userInput.clear();
 
         if (result.isExit()) {
-            PauseTransition delay = new PauseTransition(Duration.seconds(1.0));
+            double delaySeconds = 1.0;
+            PauseTransition delay = new PauseTransition(Duration.seconds(delaySeconds));
             delay.setOnFinished(e -> Platform.exit());
             delay.play();
         }

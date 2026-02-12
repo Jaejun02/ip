@@ -22,6 +22,9 @@ public class AddDeadlineCommand implements Command {
         this.by = by;
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public ExecutionResult execute(Context context) {
         Deadline newTask = new Deadline(this.description, this.by);

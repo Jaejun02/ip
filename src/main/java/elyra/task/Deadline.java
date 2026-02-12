@@ -2,7 +2,6 @@ package elyra.task;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 
 /**
  * Represents a deadline task.
@@ -10,8 +9,6 @@ import java.util.Locale;
  */
 public class Deadline extends Task {
     private final LocalDateTime by;
-    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern(
-            "MMM dd uuuu, h:mm a", Locale.ENGLISH);
 
     /**
      * Creates a new Deadline task with the specified description and due date.
@@ -37,15 +34,22 @@ public class Deadline extends Task {
         this.by = by;
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public String[] getInfos(DateTimeFormatter timeFormatter) {
         String[] baseInfo = super.getInfos(timeFormatter);
-        return new String[] {"D", baseInfo[0], baseInfo[1], this.by.format(timeFormatter)};
+        return new String[] {TaskType.DEADLINE.getStorageCode(), baseInfo[0],
+                baseInfo[1], this.by.format(timeFormatter)};
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public String toUiString(DateTimeFormatter timeFormatter) {
-        return "[D]" + super.toUiString(timeFormatter)
+        return TaskType.DEADLINE.getUiTag() + super.toUiString(timeFormatter)
                 + " (by: " + this.by.format(timeFormatter) + ")";
     }
 }

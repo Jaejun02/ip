@@ -2,6 +2,9 @@ package elyra.task;
 
 import java.util.ArrayList;
 
+/**
+ * Represents a list of tasks.
+ */
 public class TaskList {
     private final ArrayList<Task> tasks = new ArrayList<>();
 
@@ -10,6 +13,13 @@ public class TaskList {
         this.tasks.add(task);
     }
 
+    /**
+     * Retrieves the task at the specified index.
+     *
+     * @param index Index of the task to retrieve (1-based).
+     * @return The task at the specified index.
+     * @throws IndexOutOfBoundsException If the index is out of bounds.
+     */
     public Task getTask(int index) {
         if (index > 0 && index <= this.tasks.size()) {
             return this.tasks.get(index - 1);
@@ -57,6 +67,13 @@ public class TaskList {
         this.tasks.remove(index - 1);
         return removedTask;
     }
+
+    /**
+     * Finds and returns a list of tasks that contain the specified keyword in their description.
+     *
+     * @param keyword The keyword to search for.
+     * @return An ArrayList of tasks that contain the keyword.
+     */
     public ArrayList<Task> findTasksByKeyword(String keyword) {
         ArrayList<Task> matchingTasks = new ArrayList<>();
         for (Task task : this.tasks) {

@@ -58,7 +58,10 @@ public class DialogBox extends HBox {
         return new DialogBox(text, img);
     }
 
-    public static DialogBox getDukeDialog(String text, Image img) {
+    /**
+     * Creates a dialog box for Elyra's responses with the image on the left.
+     */
+    public static DialogBox getElyraDialog(String text, Image img) {
         var db = new DialogBox(text, img);
         db.flip();
         return db;

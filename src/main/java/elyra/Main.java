@@ -10,7 +10,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
- * A GUI for Duke using FXML.
+ * A GUI for Elyra using FXML.
  */
 public class Main extends Application {
 
@@ -26,9 +26,11 @@ public class Main extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
-            stage.setMinHeight(220);
-            stage.setMinWidth(417);
-            fxmlLoader.<MainWindow>getController().setElyra(elyra);  // inject the Duke instance
+            int stageMinHeight = 220;
+            stage.setMinHeight(stageMinHeight);
+            int stageMinWidth = 417;
+            stage.setMinWidth(stageMinWidth);
+            fxmlLoader.<MainWindow>getController().setElyra(elyra); // inject the Elyra instance
 
             stage.show();
         } catch (IOException e) {

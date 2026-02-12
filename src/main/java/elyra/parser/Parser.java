@@ -131,7 +131,9 @@ public class Parser {
 
     private Command parseEventCommand(String[] inputTokens) {
         String argument = String.join(" ", Arrays.copyOfRange(inputTokens, 1, inputTokens.length));
-        String[] parts = argument.split("\\s*/from\\s*|\\s*/to\\s*");
+        // Delimiter pattern for splitting an event command into 3 parts: description, /from datetime, /to datetime.
+        String eventDelimiterPattern = "\\s*/from\\s*|\\s*/to\\s*";
+        String[] parts = argument.split(eventDelimiterPattern);
         if (parts.length != 3) {
             String message = "The 'event' command requires a description, start time, and end time!";
             throw new IllegalArgumentException(message);

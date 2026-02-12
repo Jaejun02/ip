@@ -17,6 +17,9 @@ public class DeleteCommand implements Command {
         this.index = index;
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public ExecutionResult execute(Context context) {
         Task removedTask = context.tasks().deleteTask(this.index);

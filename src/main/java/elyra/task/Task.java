@@ -2,14 +2,30 @@ package elyra.task;
 
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Represents a generic task.
+ * A Task object corresponds to a task with a description and completion status.
+ */
 public class Task {
     private final String description;
     private boolean isDone;
 
+    /**
+     * Creates a new Task with the specified description.
+     * The task is initially marked as not done.
+     *
+     * @param description Description of the task.
+     */
     public Task(String description) {
         this(description, false);
     }
 
+    /**
+     * Creates a new Task with the specified description and completion status.
+     *
+     * @param description Description of the task.
+     * @param isDone Whether the task is completed.
+     */
     public Task(String description, boolean isDone) {
         assert description != null : "Description cannot be null";
         assert !description.isEmpty() : "Description cannot be empty";

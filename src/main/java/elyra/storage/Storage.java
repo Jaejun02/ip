@@ -16,6 +16,7 @@ import elyra.task.Deadline;
 import elyra.task.Event;
 import elyra.task.Task;
 import elyra.task.TaskList;
+import elyra.task.TaskType;
 import elyra.task.ToDo;
 
 /**
@@ -26,6 +27,9 @@ public class Storage {
     public static final String DEFAULT_PATH = "./data/elyra.txt";
     public static final String DELIM = " ||| ";
     private static final String DELIM_REGEX = Pattern.quote(DELIM);
+    private static final int MIN_DEADLINE_FIELDS = 4;
+    private static final int MIN_EVENT_FIELDS = 5;
+    private static final int MIN_TASK_FIELDS = 3;
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
             .withResolverStyle(ResolverStyle.STRICT);
 
@@ -91,39 +95,31 @@ public class Storage {
 
     private Task parseTaskFromLine(String line, int lineNumber) throws IOException {
         String[] parts = line.split(DELIM_REGEX);
-        if (parts.length < 3) {
-            String errorMessage = String.format("Found corrupted data at line %d (too few fields for Tasks).",
-                    lineNumber);
-            throw new IOException(errorMessage);
-        }
+        validateMinFields(parts, lineNumber);
 
         String taskType = parts[0];
         boolean isDone = parseDoneStatus(parts[1], lineNumber);
         String description = parts[2];
 
-        switch (taskType) {
-        case "T":
-            return new ToDo(description, isDone);
-        case "D":
-            if (parts.length < 4) {
-                String errorMessage = String.format("Found corrupted data at line %d (too few fields for Deadline).",
-                        lineNumber);
-                throw new IOException(errorMessage);
-            }
-            LocalDateTime by = parseDateTime(parts[3].trim(), lineNumber);
-            return new Deadline(description, isDone, by);
-        case "E":
-            if (parts.length < 5) {
-                String errorMessage = String.format("Found corrupted data at line %d (too few fields for Event).",
-                        lineNumber);
-                throw new IOException(errorMessage);
-            }
-            LocalDateTime from = parseDateTime(parts[3].trim(), lineNumber);
-            LocalDateTime to = parseDateTime(parts[4].trim(), lineNumber);
-            return new Event(description, isDone, from, to);
-        default:
+        try {
+            TaskType currentTaskType = TaskType.fromStorageCode(taskType);
+            return switch (currentTaskType) {
+                case TODO -> parseToDo(description, isDone);
+                case DEADLINE -> parseDeadline(parts, description, isDone, lineNumber);
+                case EVENT -> parseEvent(parts, description, isDone, lineNumber);
+                default -> throw new AssertionError("Unreachable state: Unknown command is parsed.");
+            };
+        } catch (IllegalArgumentException e) {
             String errorMessage = String.format("Found corrupted data at line %d (unknown task type): '%s'",
                     lineNumber, taskType);
+            throw new IOException(errorMessage);
+        }
+    }
+
+    private void validateMinFields(String[] parts, int lineNumber) throws IOException {
+        if (parts.length < MIN_TASK_FIELDS) {
+            String errorMessage = String.format("Found corrupted data at line %d (too few fields for Tasks).",
+                    lineNumber);
             throw new IOException(errorMessage);
         }
     }
@@ -138,6 +134,33 @@ public class Storage {
                     lineNumber, isDone);
             throw new IOException(errorMessage);
         }
+    }
+
+    private Task parseToDo(String description, boolean isDone) {
+        return new ToDo(description, isDone);
+    }
+
+    private Task parseDeadline(String[] parts, String description,
+                               boolean isDone, int lineNumber) throws IOException {
+        if (parts.length < MIN_DEADLINE_FIELDS) {
+            String errorMessage = String.format("Found corrupted data at line %d (too few fields for Deadline).",
+                    lineNumber);
+            throw new IOException(errorMessage);
+        }
+        LocalDateTime by = parseDateTime(parts[3].trim(), lineNumber);
+        return new Deadline(description, isDone, by);
+    }
+
+    private Task parseEvent(String[] parts, String description,
+                            boolean isDone, int lineNumber) throws IOException {
+        if (parts.length < MIN_EVENT_FIELDS) {
+            String errorMessage = String.format("Found corrupted data at line %d (too few fields for Event).",
+                    lineNumber);
+            throw new IOException(errorMessage);
+        }
+        LocalDateTime from = parseDateTime(parts[3].trim(), lineNumber);
+        LocalDateTime to = parseDateTime(parts[4].trim(), lineNumber);
+        return new Event(description, isDone, from, to);
     }
 
     private LocalDateTime parseDateTime(String dateTimeStr, int lineNumber) throws IOException {
