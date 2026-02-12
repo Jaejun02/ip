@@ -33,11 +33,18 @@ public class MainWindow extends AnchorPane {
 
     @FXML
     public void initialize() {
+        assert scrollPane != null : "scrollPane was not injected (FXML mismatch?)";
+        assert dialogContainer != null : "dialogContainer was not injected (FXML mismatch?)";
+        assert userInput != null : "userInput was not injected (FXML mismatch?)";
+        assert sendButton != null : "sendButton was not injected (FXML mismatch?)";
+
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
     /** Injects the Duke instance */
     public void setElyra(Elyra elyra) {
+        assert elyra != null : "setElyra called with null";
+        assert this.elyra == null : "setElyra should only be called once";
         this.elyra = elyra;
         dialogContainer.getChildren().add(DialogBox.getDukeDialog(this.elyra.getGreeting(), elyraImage));
     }
@@ -48,8 +55,14 @@ public class MainWindow extends AnchorPane {
      */
     @FXML
     private void handleUserInput() {
+        assert elyra != null : "handleUserInput called before setElyra";
         String input = userInput.getText();
+        assert input != null : "TextField#getText returned null (unexpected)";
+
         ExecutionResult result = elyra.getResponse(input);
+        assert result != null : "Elyra#getResponse returned null (unexpected)";
+        assert result.response() != null : "result.response is null";
+
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
                 DialogBox.getDukeDialog(result.response(), elyraImage)

@@ -26,6 +26,8 @@ public class DialogBox extends HBox {
 
     private DialogBox(String text, Image img) {
         try {
+            assert MainWindow.class.getResource("/view/DialogBox.fxml") != null
+                    : "Missing FXML resource: /view/DialogBox.fxml";
             FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogBox.fxml"));
             fxmlLoader.setController(this);
             fxmlLoader.setRoot(this);
@@ -33,6 +35,9 @@ public class DialogBox extends HBox {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        assert dialog != null : "dialog Label not injected";
+        assert displayPicture != null : "displayPicture ImageView not injected";
 
         dialog.setText(text);
         displayPicture.setImage(img);
