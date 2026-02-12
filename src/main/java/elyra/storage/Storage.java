@@ -27,11 +27,11 @@ public class Storage {
     public static final String DEFAULT_PATH = "./data/elyra.txt";
     public static final String DELIM = " ||| ";
     private static final String DELIM_REGEX = Pattern.quote(DELIM);
-    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
-            .withResolverStyle(ResolverStyle.STRICT);
-    private static final int MIN_TASK_FIELDS = 3;
     private static final int MIN_DEADLINE_FIELDS = 4;
     private static final int MIN_EVENT_FIELDS = 5;
+    private static final int MIN_TASK_FIELDS = 3;
+    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
+            .withResolverStyle(ResolverStyle.STRICT);
 
     private final Path filePath;
 

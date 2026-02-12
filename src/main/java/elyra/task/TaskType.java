@@ -33,7 +33,7 @@ public enum TaskType {
         for (TaskType taskType : values()) {
             if (taskType.storageCode.equals(code)) {
                 return taskType;
-            };
+            }
         }
         throw new IllegalArgumentException("Unknown task type code: " + code);
     }

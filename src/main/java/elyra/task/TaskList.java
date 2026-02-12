@@ -2,6 +2,9 @@ package elyra.task;
 
 import java.util.ArrayList;
 
+/**
+ * Represents a list of tasks.
+ */
 public class TaskList {
     private final ArrayList<Task> tasks = new ArrayList<>();
 
@@ -9,6 +12,13 @@ public class TaskList {
         this.tasks.add(task);
     }
 
+    /**
+     * Retrieves the task at the specified index.
+     *
+     * @param index Index of the task to retrieve (1-based).
+     * @return The task at the specified index.
+     * @throws IndexOutOfBoundsException If the index is out of bounds.
+     */
     public Task getTask(int index) {
         if (index > 0 && index <= this.tasks.size()) {
             return this.tasks.get(index - 1);
