@@ -8,8 +8,8 @@ import java.time.format.DateTimeFormatter;
  * An Event object corresponds to a task with a start date and time and an end date and time.
  */
 public class Event extends Task {
-    private final LocalDateTime startAt;
-    private final LocalDateTime endAt;
+    private LocalDateTime startAt;
+    private LocalDateTime endAt;
 
     /**
      * Creates a new Event task with the specified description, start time, and end time.
@@ -58,5 +58,27 @@ public class Event extends Task {
         return TaskType.EVENT.getUiTag() + super.toUiString(timeFormatter)
                 + " (from: " + this.startAt.format(timeFormatter) + " to: "
                 + this.endAt.format(timeFormatter) + ")";
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Override
+    protected void updateField(String fieldName,
+                            LocalDateTime newDateTimeContent) throws UnsupportedOperationException {
+        boolean isFrom = fieldName.equalsIgnoreCase("from");
+        boolean isTo = fieldName.equalsIgnoreCase("to");
+        boolean isFromOrTo = isFrom || isTo;
+        if (!isFromOrTo) {
+            throw new UnsupportedOperationException(
+                    "Cannot update field '" + fieldName + "' for Event task. "
+                            + "Only 'from' and 'to' fields can be updated with date and time content.");
+        }
+        if (isFrom) {
+            startAt = newDateTimeContent;
+        }
+        if (isTo) {
+            endAt = newDateTimeContent;
+        }
     }
 }

@@ -135,6 +135,18 @@ public class Ui {
     }
 
     /**
+     * Confirms that a task has been updated accordingly.
+     *
+     * @param updatedTask The task that was unmarked.
+     * @return Formatted update confirmation message.
+     */
+    public String confirmUpdate(Task updatedTask) {
+        String[] confirmation = {"Alright! I have updated this task.",
+                smallIndentation + updatedTask.toUiString(this.timeFormatter)};
+        return String.join(System.lineSeparator(), confirmation);
+    }
+
+    /**
      * Displays an error message for invalid user input.
      *
      * @param message Error message to display.

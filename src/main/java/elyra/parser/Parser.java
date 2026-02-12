@@ -16,6 +16,7 @@ import elyra.command.FindCommand;
 import elyra.command.ListCommand;
 import elyra.command.MarkCommand;
 import elyra.command.UnmarkCommand;
+import elyra.command.UpdateCommand;
 import elyra.storage.Storage;
 
 /**
@@ -46,6 +47,7 @@ public class Parser {
             case "event" -> parseEventCommand(inputTokens);
             case "delete" -> parseDeleteCommand(inputTokens);
             case "find" -> parseFindCommand(inputTokens);
+            case "update" -> parseUpdateCommand(inputTokens);
             default -> {
                 String message = "I'm sorry, but I don't recognize the command provided!";
                 throw new IllegalArgumentException(message);
@@ -171,6 +173,36 @@ public class Parser {
         } else {
             String keyword = String.join(" ", Arrays.copyOfRange(inputTokens, 1, inputTokens.length));
             return new FindCommand(keyword);
+        }
+    }
+
+    private Command parseUpdateCommand(String[] inputTokens) {
+        String argument = String.join(" ", Arrays.copyOfRange(inputTokens, 1, inputTokens.length));
+        // Delimiter pattern for splitting an update command into 3 parts: index, /field fieldName, /with newContent.
+        String updateDelimiterPattern = "\\s*/field\\s*|\\s*/with\\s*";
+        String[] parts = argument.split(updateDelimiterPattern);
+        if (parts.length != 3) {
+            String message = "The 'update' command requires a task index, field name, and new content!";
+            throw new IllegalArgumentException(message);
+        } else {
+            try {
+                int index = Integer.parseInt(parts[0].trim());
+                String fieldName = parts[1].trim();
+                String newContent = parts[2].trim();
+                assert !fieldName.isEmpty() : "Field name should not be empty string here.";
+                assert !newContent.isEmpty() : "New content should not be empty string here.";
+                boolean isDateTimeField = fieldName.equalsIgnoreCase("by")
+                        || fieldName.equalsIgnoreCase("from")
+                        || fieldName.equalsIgnoreCase("to");
+                if (isDateTimeField) {
+                    LocalDateTime newDateTimeContent = parseDateTime(newContent);
+                    return new UpdateCommand(index, fieldName, newDateTimeContent);
+                }
+                return new UpdateCommand(index, fieldName, newContent);
+            } catch (NumberFormatException e) {
+                String message = "The 'update' command's index argument should be an integer!";
+                throw new IllegalArgumentException(message);
+            }
         }
     }
 
