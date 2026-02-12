@@ -1,5 +1,6 @@
 package elyra.task;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
@@ -82,5 +83,10 @@ public class TaskList {
             }
         }
         return matchingTasks;
+    }
+
+    public void updateTask(int index, String fieldName, String nextTextContent, LocalDateTime newDateTimeContent) {
+        Task currentTask = getTask(index); // To check validity of index
+        currentTask.updateField(fieldName, nextTextContent, newDateTimeContent);
     }
 }
