@@ -41,6 +41,10 @@ public class MainWindow extends AnchorPane {
     public void setElyra(Elyra elyra) {
         this.elyra = elyra;
         dialogContainer.getChildren().add(DialogBox.getDukeDialog(this.elyra.getGreeting(), elyraImage));
+        if (elyra.haveLoadError()) {
+            dialogContainer.getChildren().add(DialogBox.getDukeDialog(this.elyra.getLoadDataErrorMessage(),
+                    elyraImage));
+        }
     }
 
     /**

@@ -20,6 +20,8 @@ public class Elyra {
     private final Parser parser = new Parser();
     private final TaskList tasks;
     private final Storage storage;
+    private boolean haveLoadError = false;
+    private String loadDataErrorMessage = "";
 
     /**
      * Creates a new Elyra chatbot instance with the specified file path for data storage.
@@ -32,7 +34,8 @@ public class Elyra {
         try {
             loadedTasks = storage.loadTasks();
         } catch (IOException err) {
-            ui.showLoadDataErrorMessage(err.getMessage());
+            this.haveLoadError = true;
+            this.loadDataErrorMessage = ui.showLoadDataErrorMessage(err.getMessage());
             loadedTasks = new TaskList();
         }
         this.tasks = loadedTasks;
@@ -50,6 +53,14 @@ public class Elyra {
      */
     public String getGreeting() {
         return ui.greetUser(this.name);
+    }
+
+    public boolean haveLoadError() {
+        return this.haveLoadError;
+    }
+
+    public String getLoadDataErrorMessage() {
+        return this.loadDataErrorMessage;
     }
 
     /**
