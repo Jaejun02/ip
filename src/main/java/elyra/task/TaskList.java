@@ -9,6 +9,11 @@ import java.util.ArrayList;
 public class TaskList {
     private final ArrayList<Task> tasks = new ArrayList<>();
 
+    /**
+     * Adds a new task to the task list.
+     *
+     * @param task The task to add.
+     */
     public void addTask(Task task) {
         assert task != null : "Attempted to add null task";
         this.tasks.add(task);
@@ -85,6 +90,15 @@ public class TaskList {
         return matchingTasks;
     }
 
+    /**
+     * Updates a specific field of the task at the specified index.
+     *
+     * @param index Index of the task to update (1-based).
+     * @param fieldName The name of the field to update.
+     * @param nextTextContent The new text content for the field (if applicable).
+     * @param newDateTimeContent The new date-time content for the field (if applicable).
+     * @throws IndexOutOfBoundsException If the index is out of bounds.
+     */
     public void updateTask(int index, String fieldName, String nextTextContent, LocalDateTime newDateTimeContent) {
         Task currentTask = getTask(index); // To check validity of index
         currentTask.updateField(fieldName, nextTextContent, newDateTimeContent);
