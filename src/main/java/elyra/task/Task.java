@@ -67,21 +67,30 @@ public abstract class Task {
         return (isDone ? "[X] " : "[ ] ") + description;
     }
 
+    /**
+     * Updates a field of the task with new content.
+     * Only one of newTextContent or newDateTimeContent should be non-null.
+     *
+     * @param fieldName Name of the field to update.
+     * @param newTextContent New text content for the field (if applicable).
+     * @param newDateTimeContent New datetime content for the field (if applicable).
+     * @throws UnsupportedOperationException If the field cannot be updated with the provided content type.
+     */
     public void updateField(String fieldName,
                             String newTextContent,
                             LocalDateTime newDateTimeContent) throws UnsupportedOperationException {
         if (newTextContent != null) {
-            updateField(fieldName, newTextContent);
+            updateTextField(fieldName, newTextContent);
         } else if (newDateTimeContent != null) {
-            updateField(fieldName, newDateTimeContent);
+            updateDateTimeField(fieldName, newDateTimeContent);
         } else {
-            String message = "Non-reachable state: at least one of newTextContent and " +
-                    "newDateTimeContent should be non-null.";
+            String message = "Non-reachable state: at least one of newTextContent and "
+                    + "newDateTimeContent should be non-null.";
             throw new AssertionError(message);
         }
     }
 
-    protected void updateField(String fieldName,
+    protected void updateTextField(String fieldName,
                             String newTextContent) throws UnsupportedOperationException {
         if (!fieldName.equalsIgnoreCase("description")) {
             throw new UnsupportedOperationException("Only the description field can be updated with text content.");
@@ -89,7 +98,7 @@ public abstract class Task {
         this.description = newTextContent;
     };
 
-    protected void updateField(String fieldName,
+    protected void updateDateTimeField(String fieldName,
                             LocalDateTime newDateTimeContent) throws UnsupportedOperationException {
         throw new UnsupportedOperationException("This task does not have updatable datetime fields.");
     }

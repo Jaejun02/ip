@@ -64,7 +64,7 @@ public class Event extends Task {
      * @inheritDoc
      */
     @Override
-    protected void updateField(String fieldName,
+    protected void updateDateTimeField(String fieldName,
                             LocalDateTime newDateTimeContent) throws UnsupportedOperationException {
         boolean isFrom = fieldName.equalsIgnoreCase("from");
         boolean isTo = fieldName.equalsIgnoreCase("to");

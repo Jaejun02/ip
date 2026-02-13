@@ -57,7 +57,7 @@ public class Deadline extends Task {
      * @inheritDoc
      */
     @Override
-    protected void updateField(String fieldName,
+    protected void updateDateTimeField(String fieldName,
                             LocalDateTime newDateTimeContent) throws UnsupportedOperationException {
         if (!fieldName.equalsIgnoreCase("by")) {
             throw new UnsupportedOperationException(
