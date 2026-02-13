@@ -4,12 +4,22 @@ import java.time.LocalDateTime;
 
 import elyra.task.Task;
 
+/**
+ * Represents a command to update a task.
+ */
 public class UpdateCommand implements Command {
     private final int index;
     private final String fieldToUpdate;
     private final String newTextContent;
     private final LocalDateTime newDateTimeContent;
 
+    /**
+     * Creates an update command for text fields.
+     *
+     * @param index          The index of the task to update.
+     * @param fieldToUpdate  The field of the task to update (e.g., "description").
+     * @param newTextContent The new text content for the specified field.
+     */
     public UpdateCommand(int index, String fieldToUpdate, String newTextContent) {
         this.index = index;
         this.fieldToUpdate = fieldToUpdate;
@@ -17,6 +27,13 @@ public class UpdateCommand implements Command {
         this.newDateTimeContent = null;
     }
 
+    /**
+     * Creates an update command for text fields.
+     *
+     * @param index              The index of the task to update.
+     * @param fieldToUpdate      The field of the task to update (e.g., "dueDate").
+     * @param newDateTimeContent The new date/time content for the specified field.
+     */
     public UpdateCommand(int index, String fieldToUpdate, LocalDateTime newDateTimeContent) {
         this.index = index;
         this.fieldToUpdate = fieldToUpdate;
@@ -24,6 +41,11 @@ public class UpdateCommand implements Command {
         this.newTextContent = null;
     }
 
+    /**
+     * Executes the update command.
+     * @param context Context containing UI and task list for command execution.
+     * @return ExecutionResult containing the outcome of the command.
+     */
     public ExecutionResult execute(Context context) {
         assert !(newTextContent == null && newDateTimeContent == null)
             : "Either newTextContent or newDateTimeContent should be non-null.";
