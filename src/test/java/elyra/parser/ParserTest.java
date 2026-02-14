@@ -214,7 +214,8 @@ public class ParserTest {
 
     @Test
     void parseCommand_findWithoutKeyword_throwsWithMessage() {
-        assertThrowsWithMessage("find", "The 'find' command requires a keyword (or phrase) to search for!");
+        assertThrowsWithMessage("find",
+                "The 'find' command requires a keyword (or phrase) to search for!");
     }
 
     @Test

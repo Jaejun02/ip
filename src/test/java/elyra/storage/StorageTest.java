@@ -51,7 +51,8 @@ public class StorageTest {
         assertTaskInfos(tasks.getTask(1), new String[] {"T", DONE_FLAG, "read book"});
 
         assertInstanceOf(Deadline.class, tasks.getTask(2));
-        assertTaskInfos(tasks.getTask(2), new String[] {"D", NOT_DONE_FLAG, "submit report", "2024-02-01T12:30:00"});
+        assertTaskInfos(tasks.getTask(2),
+                new String[] {"D", NOT_DONE_FLAG, "submit report", "2024-02-01T12:30:00"});
 
         assertInstanceOf(Event.class, tasks.getTask(3));
         assertTaskInfos(tasks.getTask(3), new String[] {"E", DONE_FLAG, "meeting",
