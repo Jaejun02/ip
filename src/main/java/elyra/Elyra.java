@@ -82,7 +82,9 @@ public class Elyra {
             if (result.isSave()) {
                 storage.saveTasks(this.tasks);
             }
-        } catch (IllegalArgumentException | IndexOutOfBoundsException err) {
+        } catch (IllegalArgumentException
+                 | IndexOutOfBoundsException
+                 | UnsupportedOperationException err) {
             String response = ui.showUserInputErrorMessage(err.getMessage(), userInput);
             result = new ExecutionResult(false, false, response);
         } catch (IOException err) {
