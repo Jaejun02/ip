@@ -21,6 +21,9 @@ import elyra.task.Task;
 import elyra.task.TaskList;
 import elyra.task.ToDo;
 
+// Solution below was adapted from AI generated draft of StorageTest, with modifications to match the actual
+// Storage implementation and task formats. Major help was on generating repetitive test cases for various error
+// scenarios, and on generating the expected content format for saveTasks test.
 public class StorageTest {
     public static final String DONE_FLAG = "1";
     public static final String NOT_DONE_FLAG = "0";

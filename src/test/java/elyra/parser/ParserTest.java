@@ -23,6 +23,9 @@ import elyra.command.UnmarkCommand;
 import elyra.command.UpdateCommand;
 import elyra.storage.Storage;
 
+// Solution below was adapted from AI generated draft of ParserTest, with modifications to match the actual
+// Parser implementation and command formats. Major help was on generating repetitive test cases for various error
+// scenarios, and on generating the expected content format for each command type.
 public class ParserTest {
     private final Parser parser = new Parser();
 
