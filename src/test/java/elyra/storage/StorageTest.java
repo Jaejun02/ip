@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.ResolverStyle;
 
@@ -28,7 +29,7 @@ public class StorageTest {
     Path tempDir;
 
     @Test
-    void loadTasksHappyPathParsesAllTaskTypes() throws IOException {
+    void loadTasks_happyPath_parsesAllTaskTypes() throws IOException {
         Path file = tempDir.resolve("tasks.txt");
         String delim = Storage.DELIM;
         String content = String.join(System.lineSeparator(),
@@ -53,7 +54,7 @@ public class StorageTest {
     }
 
     @Test
-    void loadTasksMissingFileReturnsEmptyTaskList() throws IOException {
+    void loadTasks_missingFile_returnsEmptyTaskList() throws IOException {
         Path file = tempDir.resolve("missing.txt");
         Storage storage = new Storage(file.toString());
 
@@ -63,7 +64,7 @@ public class StorageTest {
     }
 
     @Test
-    void loadTasksSkipsEmptyLines() throws IOException {
+    void loadTasks_emptyLines_skipsEmptyLines() throws IOException {
         Path file = tempDir.resolve("tasks.txt");
         String delim = Storage.DELIM;
         String content = String.join(System.lineSeparator(),
@@ -80,7 +81,7 @@ public class StorageTest {
     }
 
     @Test
-    void loadTasksTooFewFieldsThrowsIoException() throws IOException {
+    void loadTasks_tooFewFields_throwsIoException() throws IOException {
         Path file = tempDir.resolve("tasks.txt");
         Files.writeString(file, "T" + Storage.DELIM + "1");
 
@@ -90,7 +91,7 @@ public class StorageTest {
     }
 
     @Test
-    void loadTasksInvalidDoneStatusThrowsIoException() throws IOException {
+    void loadTasks_invalidDoneStatus_throwsIoException() throws IOException {
         Path file = tempDir.resolve("tasks.txt");
         Files.writeString(file, "T" + Storage.DELIM + "X" + Storage.DELIM + "read book");
 
@@ -100,7 +101,7 @@ public class StorageTest {
     }
 
     @Test
-    void loadTasksUnknownTaskTypeThrowsIoException() throws IOException {
+    void loadTasks_unknownTaskType_throwsIoException() throws IOException {
         Path file = tempDir.resolve("tasks.txt");
         Files.writeString(file, "Z" + Storage.DELIM + "0" + Storage.DELIM + "read book");
 
@@ -110,7 +111,7 @@ public class StorageTest {
     }
 
     @Test
-    void loadTasksDeadlineTooFewFieldsThrowsIoException() throws IOException {
+    void loadTasks_deadlineTooFewFields_throwsIoException() throws IOException {
         Path file = tempDir.resolve("tasks.txt");
         Files.writeString(file, "D" + Storage.DELIM + "0" + Storage.DELIM + "submit report");
 
@@ -120,7 +121,7 @@ public class StorageTest {
     }
 
     @Test
-    void loadTasksEventTooFewFieldsThrowsIoException() throws IOException {
+    void loadTasks_eventTooFewFields_throwsIoException() throws IOException {
         Path file = tempDir.resolve("tasks.txt");
         Files.writeString(file, "E" + Storage.DELIM + "0" + Storage.DELIM + "meeting"
                 + Storage.DELIM + "2024-03-10T09:00");
@@ -131,7 +132,7 @@ public class StorageTest {
     }
 
     @Test
-    void loadTasksInvalidDateTimeThrowsIoException() throws IOException {
+    void loadTasks_invalidDateTime_throwsIoException() throws IOException {
         Path file = tempDir.resolve("tasks.txt");
         Files.writeString(file, "D" + Storage.DELIM + "0" + Storage.DELIM + "submit report"
                 + Storage.DELIM + "2024-13-01T12:30");
@@ -139,6 +140,30 @@ public class StorageTest {
         Storage storage = new Storage(file.toString());
         IOException exception = assertThrows(IOException.class, storage::loadTasks);
         assertEquals("Found corrupted data at line 1 (invalid date & time format).", exception.getMessage());
+    }
+
+    @Test
+    void saveTasks_missingDirectories_createsDirectoriesAndWritesContent() throws IOException {
+        Path file = tempDir.resolve("nested").resolve("tasks.txt");
+        Storage storage = new Storage(file.toString());
+
+        TaskList tasks = new TaskList();
+        tasks.addTask(new ToDo("read book", true));
+        tasks.addTask(new Deadline("submit report", false,
+                LocalDateTime.of(2024, 2, 1, 12, 30)));
+        tasks.addTask(new Event("meeting", true,
+                LocalDateTime.of(2024, 3, 10, 9, 0),
+                LocalDateTime.of(2024, 3, 10, 10, 30)));
+
+        storage.saveTasks(tasks);
+
+        String delim = Storage.DELIM;
+        String expectedContent = String.join(System.lineSeparator(),
+                "T" + delim + "1" + delim + "read book",
+                "D" + delim + "0" + delim + "submit report" + delim + "2024-02-01T12:30:00",
+                "E" + delim + "1" + delim + "meeting" + delim + "2024-03-10T09:00:00"
+                        + delim + "2024-03-10T10:30:00") + System.lineSeparator();
+        assertEquals(expectedContent, Files.readString(file));
     }
 
     private void assertTaskInfos(Task task, String[] expected) {
