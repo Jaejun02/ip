@@ -27,9 +27,9 @@ public class Storage {
     public static final String DEFAULT_PATH = "./data/elyra.txt";
     public static final String DELIM = " ||| ";
     private static final String DELIM_REGEX = Pattern.quote(DELIM);
-    private static final int MIN_DEADLINE_FIELDS = 4;
-    private static final int MIN_EVENT_FIELDS = 5;
-    private static final int MIN_TASK_FIELDS = 3;
+    private static final int DEADLINE_FIELDS_NUM = 4;
+    private static final int EVENT_FIELDS_NUM = 5;
+    private static final int TASK_FIELDS_NUM = 3;
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
             .withResolverStyle(ResolverStyle.STRICT);
 
@@ -110,15 +110,15 @@ public class Storage {
                 default -> throw new AssertionError("Unreachable state: Unknown command is parsed.");
             };
         } catch (IllegalArgumentException e) {
-            String errorMessage = String.format("Found corrupted data at line %d (unknown task type): '%s'",
+            String errorMessage = String.format("Data file is corrupted at line %d: unknown task type '%s'.",
                     lineNumber, taskType);
             throw new IOException(errorMessage);
         }
     }
 
     private void validateMinFields(String[] parts, int lineNumber) throws IOException {
-        if (parts.length < MIN_TASK_FIELDS) {
-            String errorMessage = String.format("Found corrupted data at line %d (too few fields for Tasks).",
+        if (parts.length < TASK_FIELDS_NUM) {
+            String errorMessage = String.format("Data file is corrupted at line %d: not enough fields for a task.",
                     lineNumber);
             throw new IOException(errorMessage);
         }
@@ -132,7 +132,8 @@ public class Storage {
         } else if (isDone.equals(NOT_DONE_FLAG)) {
             return false;
         } else {
-            String errorMessage = String.format("Found corrupted data at line %d (invalid done status): '%s'",
+            String errorMessage = String.format(
+                    "Data file is corrupted at line %d: invalid done flag '%s' (expected 0 or 1).",
                     lineNumber, isDone);
             throw new IOException(errorMessage);
         }
@@ -144,8 +145,15 @@ public class Storage {
 
     private Task parseDeadline(String[] parts, String description,
                                boolean isDone, int lineNumber) throws IOException {
-        if (parts.length < MIN_DEADLINE_FIELDS) {
-            String errorMessage = String.format("Found corrupted data at line %d (too few fields for Deadline).",
+        if (parts.length < DEADLINE_FIELDS_NUM) {
+            String errorMessage = String.format(
+                    "Data file is corrupted at line %d: deadline is missing field(s).",
+                    lineNumber);
+            throw new IOException(errorMessage);
+        }
+        if (parts.length > DEADLINE_FIELDS_NUM) {
+            String errorMessage = String.format(
+                    "Data file is corrupted at line %d: deadline has too many fields.",
                     lineNumber);
             throw new IOException(errorMessage);
         }
@@ -155,8 +163,15 @@ public class Storage {
 
     private Task parseEvent(String[] parts, String description,
                             boolean isDone, int lineNumber) throws IOException {
-        if (parts.length < MIN_EVENT_FIELDS) {
-            String errorMessage = String.format("Found corrupted data at line %d (too few fields for Event).",
+        if (parts.length < EVENT_FIELDS_NUM) {
+            String errorMessage = String.format(
+                    "Data file is corrupted at line %d: event is missing field(s).",
+                    lineNumber);
+            throw new IOException(errorMessage);
+        }
+        if (parts.length > EVENT_FIELDS_NUM) {
+            String errorMessage = String.format(
+                    "Data file is corrupted at line %d: event has too many fields.",
                     lineNumber);
             throw new IOException(errorMessage);
         }
@@ -169,7 +184,9 @@ public class Storage {
         try {
             return LocalDateTime.parse(dateTimeStr, this.timeFormatter);
         } catch (DateTimeParseException e) {
-            String errorMessage = String.format("Found corrupted data at line %d (invalid date & time format).",
+            String errorMessage = String.format(
+                    "Data file is corrupted at line %d: invalid date/time format "
+                            + "(expected yyyy-MM-ddTHH:mm[:ss]).",
                     lineNumber);
             throw new IOException(errorMessage);
         }

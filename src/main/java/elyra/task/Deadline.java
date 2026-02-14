@@ -61,8 +61,8 @@ public class Deadline extends Task {
                             LocalDateTime newDateTimeContent) throws UnsupportedOperationException {
         if (!fieldName.equalsIgnoreCase("by")) {
             throw new UnsupportedOperationException(
-                    "Cannot update field '" + fieldName + "' for Deadline task. "
-                            + "Only 'by' field can be updated with date and time content.");
+                    "Deadlines only support updating 'by'. " +
+                            "Try: update <index> /field by /with yyyy-MM-dd HH:mm.");
         }
         by = newDateTimeContent;
     }

@@ -27,11 +27,15 @@ public class TaskList {
      * @throws IndexOutOfBoundsException If the index is out of bounds.
      */
     public Task getTask(int index) {
-        if (index > 0 && index <= this.tasks.size()) {
+        int size = this.tasks.size();
+        if (index > 0 && index <= size) {
             return this.tasks.get(index - 1);
         }
-        String message = "We do not have a task numbered " + index + " in the list."
-                + " The list currently has " + this.tasks.size() + " tasks.";
+        if (size == 0) {
+            throw new IndexOutOfBoundsException("Your task list is empty. Add a task first.");
+        }
+        String message = "Task index " + index + " is out of range. Please enter a number between 1 and "
+                + size + ".";
         throw new IndexOutOfBoundsException(message);
     }
 

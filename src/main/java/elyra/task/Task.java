@@ -95,13 +95,15 @@ public abstract class Task {
     protected void updateTextField(String fieldName,
                             String newTextContent) throws UnsupportedOperationException {
         if (!fieldName.equalsIgnoreCase("description")) {
-            throw new UnsupportedOperationException("Only the description field can be updated with text content.");
+            throw new UnsupportedOperationException("Only 'description' can be updated as text. " +
+                    "Try: update <index> /field description /with <text>.");
         }
         this.description = newTextContent;
     }
 
     protected void updateDateTimeField(String fieldName,
                             LocalDateTime newDateTimeContent) throws UnsupportedOperationException {
-        throw new UnsupportedOperationException("This task does not have updatable datetime fields.");
+        throw new UnsupportedOperationException("This task has no date/time fields. " +
+                "You can only update 'description'");
     }
 }

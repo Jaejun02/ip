@@ -120,120 +120,147 @@ public class ParserTest {
     @Test
     void parseCommand_unknownCommand_throwsWithMessage() {
         assertThrowsWithMessage("unknown",
-                "I'm sorry, but I don't recognize the command provided!");
+                "I don't recognize that command. Try: list, todo, deadline, event, "
+                        + "mark, unmark, delete, find, update, bye.");
     }
 
     @Test
     void parseCommand_reservedDelimiter_throwsWithMessage() {
         String reserved = Storage.DELIM.strip();
         assertThrowsWithMessage("todo use " + reserved + " here",
-                "'" + reserved + "' is reserved and cannot be used in task descriptions!");
+                "The text '" + reserved + "' is reserved for saving tasks. "
+                        + "Please remove it from your description.");
     }
 
     @Test
     void parseCommand_byeWithArguments_throwsWithMessage() {
-        assertThrowsWithMessage("bye now", "The 'bye' command does not take any arguments!");
+        assertThrowsWithMessage("bye now", "The 'bye' command does not take any arguments. Usage: bye");
     }
 
     @Test
     void parseCommand_listWithArguments_throwsWithMessage() {
-        assertThrowsWithMessage("list all", "The 'list' command does not take any arguments!");
+        assertThrowsWithMessage("list all", "The 'list' command does not take any arguments. Usage: list");
     }
 
     @Test
     void parseCommand_markWithoutIndex_throwsWithMessage() {
-        assertThrowsWithMessage("mark", "The 'mark' command requires exactly one argument!");
+        assertThrowsWithMessage("mark", "The 'mark' command requires exactly one argument. Usage: mark <index>");
     }
 
     @Test
     void parseCommand_markWithNonNumericIndex_throwsWithMessage() {
-        assertThrowsWithMessage("mark two", "The 'mark' command requires a numeric argument!");
+        assertThrowsWithMessage("mark two", "Index must be a number. Example: mark 2");
     }
 
     @Test
     void parseCommand_unmarkWithTooManyArgs_throwsWithMessage() {
         assertThrowsWithMessage("unmark 1 2",
-                "The 'unmark' command requires exactly one argument!");
+                "The 'unmark' command requires exactly one argument. Usage: unmark <index>");
     }
 
     @Test
     void parseCommand_unmarkWithNonNumericIndex_throwsWithMessage() {
-        assertThrowsWithMessage("unmark two", "The 'unmark' command requires a numeric argument!");
+        assertThrowsWithMessage("unmark two", "Index must be a number. Example: unmark 2");
     }
 
     @Test
     void parseCommand_todoWithoutDescription_throwsWithMessage() {
-        assertThrowsWithMessage("todo", "The 'todo' command requires a description!");
+        assertThrowsWithMessage("todo", "The 'todo' command needs a description. Usage: todo <description>");
     }
 
     @Test
     void parseCommand_deadlineMissingBy_throwsWithMessage() {
         assertThrowsWithMessage("deadline read book",
-                "The 'deadline' command requires a description and a due date!");
+                "The 'deadline' command requires a description and a due date. "
+                        + "Usage: deadline <description> /by yyyy-MM-dd HH:mm");
     }
 
     @Test
     void parseCommand_deadlineEmptyDescription_throwsWithMessage() {
         assertThrowsWithMessage("deadline /by 2024-02-01 12:30",
-                "The 'deadline' command requires a non-empty description!");
+                "The 'deadline' description cannot be empty. Usage: deadline <description> /by yyyy-MM-dd HH:mm");
     }
 
     @Test
     void parseCommand_deadlineInvalidDate_throwsWithMessage() {
         assertThrowsWithMessage("deadline read book /by 2024/02/18 10:00",
-                "Invalid date/time format! Please use 'yyyy-MM-dd HH:mm'.");
+                "Invalid date/time format. Use yyyy-MM-dd HH:mm (e.g. 2024-02-01 12:30).");
     }
 
     @Test
     void parseCommand_eventMissingEnd_throwsWithMessage() {
         assertThrowsWithMessage("event meeting /from 2024-03-10 09:00",
-                "The 'event' command requires a description, start time, and end time!");
+                "The 'event' command requires a description, start time, and end time. "
+                        + "Usage: event <description> /from yyyy-MM-dd HH:mm /to yyyy-MM-dd HH:mm");
     }
 
     @Test
     void parseCommand_eventEmptyDescription_throwsWithMessage() {
         assertThrowsWithMessage("event /from 2024-03-10 09:00 /to 2024-03-10 10:30",
-                "The 'event' command requires a non-empty description!");
+                "The 'event' description cannot be empty. Usage: event <description> "
+                        + "/from yyyy-MM-dd HH:mm /to yyyy-MM-dd HH:mm");
     }
 
     @Test
     void parseCommand_eventInvalidDate_throwsWithMessage() {
         assertThrowsWithMessage("event meeting /from 2024/03/10 09:00 /to 2024/12/10 10:30",
-                "Invalid date/time format! Please use 'yyyy-MM-dd HH:mm'.");
+                "Invalid date/time format. Use yyyy-MM-dd HH:mm (e.g. 2024-02-01 12:30).");
     }
 
     @Test
     void parseCommand_deleteWithoutIndex_throwsWithMessage() {
-        assertThrowsWithMessage("delete", "The 'delete' command requires exactly one argument!");
+        assertThrowsWithMessage("delete", "The 'delete' command requires exactly one argument. Usage: delete <index>");
     }
 
     @Test
     void parseCommand_deleteWithNonNumericIndex_throwsWithMessage() {
-        assertThrowsWithMessage("delete one", "The 'delete' command requires a numeric argument!");
+        assertThrowsWithMessage("delete one", "Index must be a number. Example: delete 3");
     }
 
     @Test
     void parseCommand_findWithoutKeyword_throwsWithMessage() {
         assertThrowsWithMessage("find",
-                "The 'find' command requires a keyword (or phrase) to search for!");
+                "The 'find' command needs a keyword. Usage: find <keyword>");
     }
 
     @Test
     void parseCommand_updateMissingArguments_throwsWithMessage() {
         assertThrowsWithMessage("update 1 /field description",
-                "The 'update' command requires a task index, field name, and new content!");
+                "The 'update' command requires a task index, field, and new value. "
+                        + "Usage: update <index> /field <field> /with <value>");
+    }
+
+    @Test
+    void parseCommand_updateMissingIndex_throwsWithMessage() {
+        assertThrowsWithMessage("update /field description /with new title",
+                "The 'update' command requires a task index. "
+                        + "Usage: update <index> /field <field> /with <value>");
+    }
+
+    @Test
+    void parseCommand_updateMissingField_throwsWithMessage() {
+        assertThrowsWithMessage("update 1 /field /with new title",
+                "The 'update' command requires a field name. "
+                        + "Usage: update <index> /field <field> /with <value>");
+    }
+
+    @Test
+    void parseCommand_updateMissingValue_throwsWithMessage() {
+        assertThrowsWithMessage("update 1 /field description /with",
+                "The 'update' command requires a new value. "
+                        + "Usage: update <index> /field <field> /with <value>");
     }
 
     @Test
     void parseCommand_updateInvalidIndex_throwsWithMessage() {
         assertThrowsWithMessage("update one /field description /with new title",
-                "The 'update' command's index argument should be an integer!");
+                "Index must be a number. Example: update 2 /field description /with new title");
     }
 
     @Test
     void parseCommand_updateInvalidDate_throwsWithMessage() {
         assertThrowsWithMessage("update 1 /field by /with 2024/02/18 10:00",
-                "Invalid date/time format! Please use 'yyyy-MM-dd HH:mm'.");
+                "Invalid date/time format. Use yyyy-MM-dd HH:mm (e.g. 2024-02-01 12:30).");
     }
 
     @Test

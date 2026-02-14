@@ -93,7 +93,7 @@ public class StorageTest {
 
         Storage storage = new Storage(file.toString());
         IOException exception = assertThrows(IOException.class, storage::loadTasks);
-        assertEquals("Found corrupted data at line 1 (too few fields for Tasks).", exception.getMessage());
+        assertEquals("Data file is corrupted at line 1: not enough fields for a task.", exception.getMessage());
     }
 
     @Test
@@ -103,7 +103,8 @@ public class StorageTest {
 
         Storage storage = new Storage(file.toString());
         IOException exception = assertThrows(IOException.class, storage::loadTasks);
-        assertEquals("Found corrupted data at line 1 (invalid done status): 'X'", exception.getMessage());
+        assertEquals("Data file is corrupted at line 1: invalid done flag 'X' (expected 0 or 1).",
+                exception.getMessage());
     }
 
     @Test
@@ -113,7 +114,7 @@ public class StorageTest {
 
         Storage storage = new Storage(file.toString());
         IOException exception = assertThrows(IOException.class, storage::loadTasks);
-        assertEquals("Found corrupted data at line 1 (unknown task type): 'Z'", exception.getMessage());
+        assertEquals("Data file is corrupted at line 1: unknown task type 'Z'.", exception.getMessage());
     }
 
     @Test
@@ -123,7 +124,7 @@ public class StorageTest {
 
         Storage storage = new Storage(file.toString());
         IOException exception = assertThrows(IOException.class, storage::loadTasks);
-        assertEquals("Found corrupted data at line 1 (too few fields for Deadline).", exception.getMessage());
+        assertEquals("Data file is corrupted at line 1: deadline is missing field(s).", exception.getMessage());
     }
 
     @Test
@@ -134,7 +135,7 @@ public class StorageTest {
 
         Storage storage = new Storage(file.toString());
         IOException exception = assertThrows(IOException.class, storage::loadTasks);
-        assertEquals("Found corrupted data at line 1 (too few fields for Event).", exception.getMessage());
+        assertEquals("Data file is corrupted at line 1: event is missing field(s).", exception.getMessage());
     }
 
     @Test
@@ -145,7 +146,8 @@ public class StorageTest {
 
         Storage storage = new Storage(file.toString());
         IOException exception = assertThrows(IOException.class, storage::loadTasks);
-        assertEquals("Found corrupted data at line 1 (invalid date & time format).", exception.getMessage());
+        assertEquals("Data file is corrupted at line 1: invalid date/time format "
+                + "(expected yyyy-MM-ddTHH:mm[:ss]).", exception.getMessage());
     }
 
     @Test

@@ -71,8 +71,8 @@ public class Event extends Task {
         boolean isFromOrTo = isFrom || isTo;
         if (!isFromOrTo) {
             throw new UnsupportedOperationException(
-                    "Cannot update field '" + fieldName + "' for Event task. "
-                            + "Only 'from' and 'to' fields can be updated with date and time content.");
+                    "Events only support 'from' or 'to'. " +
+                            "Try: update <index> /field from|to /with yyyy-MM-dd HH:mm.");
         }
         if (isFrom) {
             startAt = newDateTimeContent;
