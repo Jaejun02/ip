@@ -62,7 +62,7 @@ public class DialogBox extends HBox {
      * Creates a dialog box for Elyra's responses with the image on the left.
      */
     public static DialogBox getElyraDialog(String text, Image img) {
-        var db = new DialogBox(text, img);
+        DialogBox db = new DialogBox(text, img);
         db.flip();
         return db;
     }
