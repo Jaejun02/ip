@@ -54,7 +54,9 @@ public abstract class Task {
      * @return Array of strings containing task information.
      */
     public String[] getInfos(DateTimeFormatter timeFormatter) {
-        return new String[] {(isDone ? "1" : "0"), this.description};
+        String DONE_FLAG = "1";
+        String NOT_DONE_FLAG = "0";
+        return new String[] {(isDone ? DONE_FLAG : NOT_DONE_FLAG), this.description};
     }
 
     /**

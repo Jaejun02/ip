@@ -125,9 +125,11 @@ public class Storage {
     }
 
     private boolean parseDoneStatus(String isDone, int lineNumber) throws IOException {
-        if (isDone.equals("1")) {
+        String DONE_FLAG = "1";
+        String NOT_DONE_FLAG = "0";
+        if (isDone.equals(DONE_FLAG)) {
             return true;
-        } else if (isDone.equals("0")) {
+        } else if (isDone.equals(NOT_DONE_FLAG)) {
             return false;
         } else {
             String errorMessage = String.format("Found corrupted data at line %d (invalid done status): '%s'",

@@ -22,6 +22,8 @@ import elyra.task.TaskList;
 import elyra.task.ToDo;
 
 public class StorageTest {
+    public static final String DONE_FLAG = "1";
+    public static final String NOT_DONE_FLAG = "0";
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
             .withResolverStyle(ResolverStyle.STRICT);
 
@@ -33,9 +35,9 @@ public class StorageTest {
         Path file = tempDir.resolve("tasks.txt");
         String delim = Storage.DELIM;
         String content = String.join(System.lineSeparator(),
-                "T" + delim + "1" + delim + "read book",
-                "D" + delim + "0" + delim + "submit report" + delim + "2024-02-01T12:30",
-                "E" + delim + "1" + delim + "meeting" + delim + "2024-03-10T09:00" + delim + "2024-03-10T10:30");
+                "T" + delim + DONE_FLAG + delim + "read book",
+                "D" + delim + NOT_DONE_FLAG + delim + "submit report" + delim + "2024-02-01T12:30",
+                "E" + delim + DONE_FLAG + delim + "meeting" + delim + "2024-03-10T09:00" + delim + "2024-03-10T10:30");
         Files.writeString(file, content);
 
         Storage storage = new Storage(file.toString());
@@ -43,13 +45,13 @@ public class StorageTest {
 
         assertEquals(3, tasks.getTasks().size());
         assertInstanceOf(ToDo.class, tasks.getTask(1));
-        assertTaskInfos(tasks.getTask(1), new String[] {"T", "1", "read book"});
+        assertTaskInfos(tasks.getTask(1), new String[] {"T", DONE_FLAG, "read book"});
 
         assertInstanceOf(Deadline.class, tasks.getTask(2));
-        assertTaskInfos(tasks.getTask(2), new String[] {"D", "0", "submit report", "2024-02-01T12:30:00"});
+        assertTaskInfos(tasks.getTask(2), new String[] {"D", NOT_DONE_FLAG, "submit report", "2024-02-01T12:30:00"});
 
         assertInstanceOf(Event.class, tasks.getTask(3));
-        assertTaskInfos(tasks.getTask(3), new String[] {"E", "1", "meeting",
+        assertTaskInfos(tasks.getTask(3), new String[] {"E", DONE_FLAG, "meeting",
                 "2024-03-10T09:00:00", "2024-03-10T10:30:00"});
     }
 
@@ -70,20 +72,20 @@ public class StorageTest {
         String content = String.join(System.lineSeparator(),
                 "",
                 "   ",
-                "T" + delim + "0" + delim + "read book");
+                "T" + delim + NOT_DONE_FLAG + delim + "read book");
         Files.writeString(file, content);
 
         Storage storage = new Storage(file.toString());
         TaskList tasks = storage.loadTasks();
 
         assertEquals(1, tasks.getTasks().size());
-        assertTaskInfos(tasks.getTask(1), new String[] {"T", "0", "read book"});
+        assertTaskInfos(tasks.getTask(1), new String[] {"T", NOT_DONE_FLAG, "read book"});
     }
 
     @Test
     void loadTasks_tooFewFields_throwsIoException() throws IOException {
         Path file = tempDir.resolve("tasks.txt");
-        Files.writeString(file, "T" + Storage.DELIM + "1");
+        Files.writeString(file, "T" + Storage.DELIM + DONE_FLAG);
 
         Storage storage = new Storage(file.toString());
         IOException exception = assertThrows(IOException.class, storage::loadTasks);
@@ -103,7 +105,7 @@ public class StorageTest {
     @Test
     void loadTasks_unknownTaskType_throwsIoException() throws IOException {
         Path file = tempDir.resolve("tasks.txt");
-        Files.writeString(file, "Z" + Storage.DELIM + "0" + Storage.DELIM + "read book");
+        Files.writeString(file, "Z" + Storage.DELIM + NOT_DONE_FLAG + Storage.DELIM + "read book");
 
         Storage storage = new Storage(file.toString());
         IOException exception = assertThrows(IOException.class, storage::loadTasks);
@@ -113,7 +115,7 @@ public class StorageTest {
     @Test
     void loadTasks_deadlineTooFewFields_throwsIoException() throws IOException {
         Path file = tempDir.resolve("tasks.txt");
-        Files.writeString(file, "D" + Storage.DELIM + "0" + Storage.DELIM + "submit report");
+        Files.writeString(file, "D" + Storage.DELIM + NOT_DONE_FLAG + Storage.DELIM + "submit report");
 
         Storage storage = new Storage(file.toString());
         IOException exception = assertThrows(IOException.class, storage::loadTasks);
@@ -123,7 +125,7 @@ public class StorageTest {
     @Test
     void loadTasks_eventTooFewFields_throwsIoException() throws IOException {
         Path file = tempDir.resolve("tasks.txt");
-        Files.writeString(file, "E" + Storage.DELIM + "0" + Storage.DELIM + "meeting"
+        Files.writeString(file, "E" + Storage.DELIM + NOT_DONE_FLAG + Storage.DELIM + "meeting"
                 + Storage.DELIM + "2024-03-10T09:00");
 
         Storage storage = new Storage(file.toString());
@@ -134,7 +136,7 @@ public class StorageTest {
     @Test
     void loadTasks_invalidDateTime_throwsIoException() throws IOException {
         Path file = tempDir.resolve("tasks.txt");
-        Files.writeString(file, "D" + Storage.DELIM + "0" + Storage.DELIM + "submit report"
+        Files.writeString(file, "D" + Storage.DELIM + NOT_DONE_FLAG + Storage.DELIM + "submit report"
                 + Storage.DELIM + "2024-13-01T12:30");
 
         Storage storage = new Storage(file.toString());
@@ -159,9 +161,9 @@ public class StorageTest {
 
         String delim = Storage.DELIM;
         String expectedContent = String.join(System.lineSeparator(),
-                "T" + delim + "1" + delim + "read book",
-                "D" + delim + "0" + delim + "submit report" + delim + "2024-02-01T12:30:00",
-                "E" + delim + "1" + delim + "meeting" + delim + "2024-03-10T09:00:00"
+                "T" + delim + DONE_FLAG + delim + "read book",
+                "D" + delim + NOT_DONE_FLAG + delim + "submit report" + delim + "2024-02-01T12:30:00",
+                "E" + delim + DONE_FLAG + delim + "meeting" + delim + "2024-03-10T09:00:00"
                         + delim + "2024-03-10T10:30:00") + System.lineSeparator();
         assertEquals(expectedContent, Files.readString(file));
     }
