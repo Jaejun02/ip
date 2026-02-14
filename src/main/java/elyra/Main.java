@@ -32,6 +32,7 @@ public class Main extends Application {
             stage.setMinWidth(STAGE_MIN_WIDTH);
             fxmlLoader.<MainWindow>getController().setElyra(elyra); // inject the Elyra instance
 
+            stage.setTitle("Elyra");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
