@@ -18,4 +18,4 @@ public record Context(Ui ui, TaskList tasks) {
         assert ui != null : "Context.ui cannot be null";
         assert tasks != null : "Context.tasks cannot be null";
     }
-};
+}

@@ -96,7 +96,7 @@ public abstract class Task {
             throw new UnsupportedOperationException("Only the description field can be updated with text content.");
         }
         this.description = newTextContent;
-    };
+    }
 
     protected void updateDateTimeField(String fieldName,
                             LocalDateTime newDateTimeContent) throws UnsupportedOperationException {
