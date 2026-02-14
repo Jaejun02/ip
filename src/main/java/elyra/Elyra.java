@@ -20,7 +20,7 @@ public class Elyra {
     private final Parser parser = new Parser();
     private final TaskList tasks;
     private final Storage storage;
-    private boolean haveLoadError = false;
+    private boolean hasLoadError = false;
     private String loadDataErrorMessage = "";
 
     /**
@@ -34,7 +34,7 @@ public class Elyra {
         try {
             loadedTasks = storage.loadTasks();
         } catch (IOException err) {
-            this.haveLoadError = true;
+            this.hasLoadError = true;
             this.loadDataErrorMessage = ui.showLoadDataErrorMessage(err.getMessage());
             loadedTasks = new TaskList();
         }
@@ -56,7 +56,7 @@ public class Elyra {
     }
 
     public boolean haveLoadError() {
-        return this.haveLoadError;
+        return this.hasLoadError;
     }
 
     public String getLoadDataErrorMessage() {
