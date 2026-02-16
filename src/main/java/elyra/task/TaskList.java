@@ -87,7 +87,9 @@ public class TaskList {
     public ArrayList<Task> findTasksByKeyword(String keyword) {
         ArrayList<Task> matchingTasks = new ArrayList<>();
         for (Task task : this.tasks) {
-            if (task.getDescription().contains(keyword)) {
+            String lowerCaseTaskDescription = task.getDescription().toLowerCase();
+            String lowerCaseKeyword = keyword.toLowerCase();
+            if (lowerCaseTaskDescription.contains(lowerCaseKeyword)) {
                 matchingTasks.add(task);
             }
         }
