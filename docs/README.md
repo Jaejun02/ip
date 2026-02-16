@@ -1,117 +1,108 @@
-# Elyra User Guide
+# 🤖 Elyra User Guide
 
 Elyra is a desktop task manager chatbot that lets you track todos, deadlines, and events using short commands in a chat-style UI.
 
-![Elyra UI](Ui.png)
+<img src="Ui.png" alt="Elyra UI" width="300">
 
-## Table of contents
+---
 
-- [Quick start](#quick-start)
-- [Features](#features)
-- [Data storage](#data-storage)
-- [Command summary](#command-summary)
+## 📖 Table of Contents
+* [Quick Start](#quick-start)
+* [General Usage Notes](#general-usage-notes)
+* [Commands: Adding Tasks](#adding-tasks)
+* [Commands: Managing Tasks](#managing-tasks)
+* [Data Storage](#data-storage)
+* [Command Summary](#command-summary)
 
-## Quick start
+---
 
-1. Ensure you have JDK 17 installed.
-2. If you have `Elyra.jar`, run `java -jar Elyra.jar` from the folder that contains it.
-3. Otherwise, from the project root, run `.\gradlew run` (Windows) or `./gradlew run` (macOS/Linux).
-4. Type a command into the input box and press Enter.
+## ⚡ Quick Start
 
-## Features
+1. **Install Java:** Ensure you have **JDK 17** installed.
+2. **Run the App:**
+    * If you have `Elyra.jar`: `java -jar Elyra.jar`
+    * From project root: `.\gradlew run` (Win) or `./gradlew run` (Mac/Linux)
+3. **Chat:** Type a command into the input box and press **Enter**.
 
-### Notes on Command format
+---
 
-- Commands are case-insensitive. `LIST`, `List`, and `list` all work.
-- Words in `UPPER_CASE` are parameters you provide.
-- Task indexes are 1-based and come from the list shown by `list`.
-- Date/time must be `yyyy-MM-dd HH:mm` (24-hour), e.g. `2026-02-15 23:59`.
-- `find` uses the full text after `find` as one keyword and does a case-insensitive substring match.
-- `update` supports these fields: `description` (all tasks), `by` (deadlines), `from`/`to` (events).
-- Tasks are shown with tags: `[T]` todo, `[D]` deadline, `[E]` event. Done tasks show `[X]`.
+## 📝 Notes on Command Format
 
-### Add a todo (todo)
+* **Case Sensitivity:** Commands are case-insensitive (`LIST`, `List`, and `list` all work).
+* **Parameters:** Words in `UPPER_CASE` are user-defined inputs.
+* **Dates:** Must be in `yyyy-MM-dd HH:mm` format (e.g., `2026-02-15 23:59`).
+* **Task Indicators:** * `[T]` Todo | `[D]` Deadline | `[E]` Event
+    * `[X]` Task is marked as done.
 
-Adds a task without date/time.
+---
 
-**Format:** `todo DESCRIPTION`  
-**Example:** `todo read CS2103 notes`
+## ✨ Features
 
-### Add a deadline (deadline)
+### `todo`: Add a simple task
+Adds a task without any date or time constraints.
+> **Format:** `todo DESCRIPTION`  
+> **Example:** `todo read CS2103 notes`
 
-Adds a task with a due date and time.
+### `deadline`: Add a time-sensitive task
+Adds a task that must be completed by a specific deadline.
+> **Format:** `deadline DESCRIPTION /by yyyy-MM-dd HH:mm`  
+> **Example:** `deadline iP submission /by 2026-02-15 23:59`
 
-**Format:** `deadline DESCRIPTION /by yyyy-MM-dd HH:mm`  
-**Example:** `deadline iP submission /by 2026-02-15 23:59`
+### `event`: Add a scheduled task
+Adds a task with a specific start and end time.
+> **Format:** `event DESCRIPTION /from yyyy-MM-dd HH:mm /to yyyy-MM-dd HH:mm`  
+> **Example:** `event project meeting /from 2026-02-20 14:00 /to 2026-02-20 15:30`
 
-### Add an event (event)
+### `list`: View all tasks
+Displays your current list of tasks with their status icons and indexes.
+> **Format:** `list`
 
-Adds a task with a start and end date/time.
+### `mark` / `unmark`: Toggle completion
+Update the status of a task using its index from the `list` command.
+> **Format:** `mark INDEX` or `unmark INDEX`  
+> **Example:** `mark 2`
 
-**Format:** `event DESCRIPTION /from yyyy-MM-dd HH:mm /to yyyy-MM-dd HH:mm`  
-**Example:** `event project meeting /from 2026-02-20 14:00 /to 2026-02-20 15:30`
+### `update`: Edit an existing task
+Modify specific fields of a task without deleting it.
+> **Format:** `update INDEX /field FIELD /with VALUE`  
+> **Valid Fields:** `description` (for all tasks), `by` (for deadlines only), `from`/`to` (for events only).  
+> **Example:** `update 1 /field description /with revise lecture 3`, `update 2 /field by /with 2026-02-16 18:00`, `update 3 /field from /with 2026-02-20 13:30`
 
-### List tasks (list)
+### `delete`: Remove a task
+Permanently removes a task from your list.
+> **Format:** `delete INDEX`  
+> **Example:** `delete 3`
 
-Shows all tasks.
+### `find`: Search tasks
+Finds tasks whose descriptions contain the keyword (case-insensitive).
+> **Format:** `find KEYWORD`  
+> **Example:** `find tutorial`
 
-**Format:** `list`
+### `bye`: Exit the app
+Closes the Elyra application.
+> **Format:** `bye`
 
-### Mark a task as done (mark)
+---
 
-**Format:** `mark INDEX`  
-**Example:** `mark 2`
+## 💾 Data Storage
 
-### Mark a task as not done (unmark)
+* **Auto-save:** Your tasks are saved automatically after any command that changes data.
+* **File Location:** The data file is stored at `data/elyra.txt` relative to the app folder.
+* **Corruption:** If the file is corrupted, Elyra starts with an empty list. You can always exit Elyra to manually to fix formatting issues to preserve your data.
 
-**Format:** `unmark INDEX`  
-**Example:** `unmark 2`
+---
 
-### Delete a task (delete)
-
-Removes a task from your list.
-
-**Format:** `delete INDEX`  
-**Example:** `delete 3`
-
-### Find tasks by keyword (find)
-
-Finds tasks whose descriptions contain the keyword (case-sensitive).
-
-**Format:** `find KEYWORD`  
-**Example:** `find tutorial`
-
-### Update a task (update)
-
-Updates a field in a task.
-
-**Format:** `update INDEX /field FIELD /with VALUE`  
-**Examples:** `update 1 /field description /with revise lecture 3`, `update 2 /field by /with 2026-02-16 18:00`,
-`update 3 /field from /with 2026-02-20 13:30`
-
-### Exit the app (bye)
-
-Closes Elyra.
-
-**Format:** `bye`
-
-## Data storage
-
-- Your tasks are saved automatically after any command that changes data.
-- The data file is `data/elyra.txt` relative to the app folder.
-- If the file is corrupted, Elyra starts with an empty task list and shows an error message. However, you may always exit Elyra to re-examine your data file.
-
-## Command summary
+## 📋 Command Summary
 
 | Action | Format | Example |
-| --- | --- | --- |
-| Add todo | `todo DESCRIPTION` | `todo read CS2103 notes` |
-| Add deadline | `deadline DESCRIPTION /by yyyy-MM-dd HH:mm` | `deadline iP submission /by 2026-02-15 23:59` |
-| Add event | `event DESCRIPTION /from yyyy-MM-dd HH:mm /to yyyy-MM-dd HH:mm` | `event project meeting /from 2026-02-20 14:00 /to 2026-02-20 15:30` |
-| List | `list` | `list` |
-| Mark | `mark INDEX` | `mark 2` |
-| Unmark | `unmark INDEX` | `unmark 2` |
-| Delete | `delete INDEX` | `delete 3` |
-| Find | `find KEYWORD` | `find tutorial` |
-| Update | `update INDEX /field FIELD /with VALUE` | `update 1 /field description /with revise lecture 3` |
-| Exit | `bye` | `bye` |
+| :--- | :--- | :--- |
+| **Add Todo** | `todo DESCRIPTION` | `todo buy milk` |
+| **Add Deadline** | `deadline DESC /by TIME` | `deadline return book /by 2026-02-15 18:00` |
+| **Add Event** | `event DESC /from T1 /to T2` | `event concert /from 2026-03-01 19:00 /to 22:00` |
+| **List** | `list` | `list` |
+| **Mark** | `mark INDEX` | `mark 1` |
+| **Unmark** | `unmark INDEX` | `unmark 1` |
+| **Delete** | `delete INDEX` | `delete 1` |
+| **Update** | `update INDEX /field F /with V` | `update 1 /field description /with sleep` |
+| **Find** | `find KEYWORD` | `find tutorial` |
+| **Exit** | `bye` | `bye` |
