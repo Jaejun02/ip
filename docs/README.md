@@ -94,15 +94,15 @@ Closes the Elyra application.
 
 ## 📋 Command Summary
 
-| Action | Format | Example |
-| :--- | :--- | :--- |
-| **Add Todo** | `todo DESCRIPTION` | `todo buy milk` |
-| **Add Deadline** | `deadline DESC /by TIME` | `deadline return book /by 2026-02-15 18:00` |
-| **Add Event** | `event DESC /from T1 /to T2` | `event concert /from 2026-03-01 19:00 /to 22:00` |
-| **List** | `list` | `list` |
-| **Mark** | `mark INDEX` | `mark 1` |
-| **Unmark** | `unmark INDEX` | `unmark 1` |
-| **Delete** | `delete INDEX` | `delete 1` |
-| **Update** | `update INDEX /field F /with V` | `update 1 /field description /with sleep` |
-| **Find** | `find KEYWORD` | `find tutorial` |
-| **Exit** | `bye` | `bye` |
+| Action | Format | Example                                                     |
+| :--- | :--- |:------------------------------------------------------------|
+| **Add Todo** | `todo DESCRIPTION` | `todo buy milk`                                             |
+| **Add Deadline** | `deadline DESC /by TIME` | `deadline return book /by 2026-02-15 18:00`                 |
+| **Add Event** | `event DESC /from T1 /to T2` | `event concert /from 2026-03-01 19:00 /to 2026-03-01 22:00` |
+| **List** | `list` | `list`                                                      |
+| **Mark** | `mark INDEX` | `mark 1`                                                    |
+| **Unmark** | `unmark INDEX` | `unmark 1`                                                  |
+| **Delete** | `delete INDEX` | `delete 1`                                                  |
+| **Update** | `update INDEX /field F /with V` | `update 1 /field description /with sleep`                   |
+| **Find** | `find KEYWORD` | `find tutorial`                                             |
+| **Exit** | `bye` | `bye`                                                       |
