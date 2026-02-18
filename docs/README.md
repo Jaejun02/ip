@@ -8,35 +8,33 @@ Elyra is a desktop task manager chatbot that lets you track todos, deadlines, an
 
 ## 📖 Table of Contents
 * [Quick Start](#quick-start)
-* [General Usage Notes](#general-usage-notes)
-* [Commands: Adding Tasks](#adding-tasks)
-* [Commands: Managing Tasks](#managing-tasks)
+* [Command Format Notes](#command-format-notes)
+* [Features](#features)
 * [Data Storage](#data-storage)
 * [Command Summary](#command-summary)
 
 ---
 
-## ⚡ Quick Start
+## ⚡ Quick Start {#quick-start}
 
 1. **Install Java:** Ensure you have **JDK 17** installed.
 2. **Run the App:**
     * If you have `Elyra.jar`: `java -jar Elyra.jar`
     * From project root: `.\gradlew run` (Win) or `./gradlew run` (Mac/Linux)
-3. **Chat:** Type a command into the input box and press **Enter**.
+3. **Chat:** Type a command into the input box and press **Enter** or click **Send** button.
 
 ---
 
-## 📝 Notes on Command Format
+## 📝 Command Format Notes {#command-format-notes}
 
 * **Case Sensitivity:** Commands are case-insensitive (`LIST`, `List`, and `list` all work).
 * **Parameters:** Words in `UPPER_CASE` are user-defined inputs.
 * **Dates:** Must be in `yyyy-MM-dd HH:mm` format (e.g., `2026-02-15 23:59`).
-* **Task Indicators:** * `[T]` Todo | `[D]` Deadline | `[E]` Event
-    * `[X]` Task is marked as done.
+* **Extraneous Parameters:** Extraneous parameters for commands that do not take in parameters (such as `list` and `bye`) are not allowed.
 
 ---
 
-## ✨ Features
+## ✨ Features {#features}
 
 ### `todo`: Add a simple task
 Adds a task without any date or time constraints.
@@ -58,7 +56,7 @@ Displays your current list of tasks with their status icons and indexes.
 > **Format:** `list`
 
 ### `mark` / `unmark`: Toggle completion
-Update the status of a task using its index from the `list` command.
+Update the status of a task using its index from the view shown by the `list` command.
 > **Format:** `mark INDEX` or `unmark INDEX`  
 > **Example:** `mark 2`
 
@@ -66,7 +64,9 @@ Update the status of a task using its index from the `list` command.
 Modify specific fields of a task without deleting it.
 > **Format:** `update INDEX /field FIELD /with VALUE`  
 > **Valid Fields:** `description` (for all tasks), `by` (for deadlines only), `from`/`to` (for events only).  
-> **Example:** `update 1 /field description /with revise lecture 3`, `update 2 /field by /with 2026-02-16 18:00`, `update 3 /field from /with 2026-02-20 13:30`
+> **Example 1:** `update 1 /field description /with revise lecture 3`  
+> **Example 2:** `update 2 /field by /with 2026-02-16 18:00`  
+> **Example 3:** `update 3 /field from /with 2026-02-20 13:30`  
 
 ### `delete`: Remove a task
 Permanently removes a task from your list.
@@ -84,15 +84,15 @@ Closes the Elyra application.
 
 ---
 
-## 💾 Data Storage
+## 💾 Data Storage {#data-storage}
 
 * **Auto-save:** Your tasks are saved automatically after any command that changes data.
 * **File Location:** The data file is stored at `data/elyra.txt` relative to the app folder.
-* **Corruption:** If the file is corrupted, Elyra starts with an empty list. You can always exit Elyra to manually to fix formatting issues to preserve your data.
+* **Corruption:** If the file is corrupted, Elyra starts with an empty list. You can always exit Elyra without entering any commands to manually to fix formatting issues to preserve your data.
 
 ---
 
-## 📋 Command Summary
+## 📋 Command Summary {#command-summary}
 
 | Action | Format | Example                                                     |
 | :--- | :--- |:------------------------------------------------------------|
