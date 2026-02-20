@@ -30,6 +30,11 @@ public class AddEventCommand implements Command {
      */
     @Override
     public ExecutionResult execute(Context context) {
+        if (!this.startAt.isBefore(this.endAt)) {
+            String message = "The 'event' command requires the start time to be before the end time. "
+                    + "Usage: event <description> /from yyyy-MM-dd HH:mm /to yyyy-MM-dd HH:mm";
+            throw new IllegalArgumentException(message);
+        }
         Event newTask = new Event(this.description, this.startAt, this.endAt);
         context.tasks().addTask(newTask);
         String response = context.ui().confirmAddition(newTask, context.tasks());
