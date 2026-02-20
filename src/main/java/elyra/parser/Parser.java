@@ -118,8 +118,8 @@ public class Parser {
         String argument = String.join(" ", Arrays.copyOfRange(inputTokens, 1, inputTokens.length));
         String[] parts = argument.split("/by");
         if (parts.length != 2) {
-            String message = "The 'deadline' command requires a description and a due date. " +
-                    "Usage: deadline <description> /by yyyy-MM-dd HH:mm";
+            String message = "The 'deadline' command requires a description and a due date. "
+                    + "Usage: deadline <description> /by yyyy-MM-dd HH:mm";
             throw new IllegalArgumentException(message);
         }
         String description = parts[0].trim();
@@ -138,8 +138,8 @@ public class Parser {
         String eventDelimiterPattern = "\\s*/from\\s*|\\s*/to\\s*";
         String[] parts = argument.split(eventDelimiterPattern);
         if (parts.length != 3) {
-            String message = "The 'event' command requires a description, start time, and end time. " +
-                    "Usage: event <description> /from yyyy-MM-dd HH:mm /to yyyy-MM-dd HH:mm";
+            String message = "The 'event' command requires a description, start time, and end time. "
+                    + "Usage: event <description> /from yyyy-MM-dd HH:mm /to yyyy-MM-dd HH:mm";
             throw new IllegalArgumentException(message);
         }
         String description = parts[0].trim();
@@ -182,27 +182,27 @@ public class Parser {
         String updateDelimiterPattern = "\\s*/field\\s*|\\s*/with\\s*";
         String[] parts = argument.split(updateDelimiterPattern, -1);
         if (parts.length != 3) {
-            String message = "The 'update' command requires a task index, field, and new value. " +
-                    "Usage: update <index> /field <field> /with <value>";
+            String message = "The 'update' command requires a task index, field, and new value. "
+                    + "Usage: update <index> /field <field> /with <value>";
             throw new IllegalArgumentException(message);
         }
         try {
             String indexText = parts[0].trim();
             if (indexText.isEmpty()) {
-                String message = "The 'update' command requires a task index. " +
-                        "Usage: update <index> /field <field> /with <value>";
+                String message = "The 'update' command requires a task index. "
+                        + "Usage: update <index> /field <field> /with <value>";
                 throw new IllegalArgumentException(message);
             }
             String fieldName = parts[1].trim();
             if (fieldName.isEmpty()) {
-                String message = "The 'update' command requires a field name. " +
-                        "Usage: update <index> /field <field> /with <value>";
+                String message = "The 'update' command requires a field name. "
+                        + "Usage: update <index> /field <field> /with <value>";
                 throw new IllegalArgumentException(message);
             }
             String newContent = parts[2].trim();
             if (newContent.isEmpty()) {
-                String message = "The 'update' command requires a new value. " +
-                        "Usage: update <index> /field <field> /with <value>";
+                String message = "The 'update' command requires a new value. "
+                        + "Usage: update <index> /field <field> /with <value>";
                 throw new IllegalArgumentException(message);
             }
             int index = Integer.parseInt(indexText);

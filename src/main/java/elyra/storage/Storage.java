@@ -125,11 +125,11 @@ public class Storage {
     }
 
     private boolean parseDoneStatus(String isDone, int lineNumber) throws IOException {
-        String DONE_FLAG = "1";
-        String NOT_DONE_FLAG = "0";
-        if (isDone.equals(DONE_FLAG)) {
+        String doneFlag = "1";
+        String notDoneFlag = "0";
+        if (isDone.equals(doneFlag)) {
             return true;
-        } else if (isDone.equals(NOT_DONE_FLAG)) {
+        } else if (isDone.equals(notDoneFlag)) {
             return false;
         } else {
             String errorMessage = String.format(

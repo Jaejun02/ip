@@ -54,9 +54,9 @@ public abstract class Task {
      * @return Array of strings containing task information.
      */
     public String[] getInfos(DateTimeFormatter timeFormatter) {
-        String DONE_FLAG = "1";
-        String NOT_DONE_FLAG = "0";
-        return new String[] {(isDone ? DONE_FLAG : NOT_DONE_FLAG), this.description};
+        String doneFlag = "1";
+        String notDoneFlag = "0";
+        return new String[] {(isDone ? doneFlag : notDoneFlag), this.description};
     }
 
     /**
@@ -95,15 +95,15 @@ public abstract class Task {
     protected void updateTextField(String fieldName,
                             String newTextContent) throws UnsupportedOperationException {
         if (!fieldName.equalsIgnoreCase("description")) {
-            throw new UnsupportedOperationException("Only 'description' can be updated as text. " +
-                    "Try: update <index> /field description /with <text>.");
+            throw new UnsupportedOperationException("Only 'description' can be updated as text. "
+                    + "Try: update <index> /field description /with <text>.");
         }
         this.description = newTextContent;
     }
 
     protected void updateDateTimeField(String fieldName,
                             LocalDateTime newDateTimeContent) throws UnsupportedOperationException {
-        throw new UnsupportedOperationException("This task has no date/time fields. " +
-                "You can only update 'description'");
+        throw new UnsupportedOperationException("This task has no date/time fields. "
+                + "You can only update 'description'");
     }
 }

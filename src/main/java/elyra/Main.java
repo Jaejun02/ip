@@ -26,10 +26,10 @@ public class Main extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
-            int STAGE_MIN_HEIGHT = 220;
-            stage.setMinHeight(STAGE_MIN_HEIGHT);
-            int STAGE_MIN_WIDTH = 417;
-            stage.setMinWidth(STAGE_MIN_WIDTH);
+            int stageMinHeight = 220;
+            stage.setMinHeight(stageMinHeight);
+            int stageMinWidth = 417;
+            stage.setMinWidth(stageMinWidth);
             fxmlLoader.<MainWindow>getController().setElyra(elyra); // inject the Elyra instance
 
             stage.setTitle("Elyra");

@@ -71,8 +71,8 @@ public class Event extends Task {
         boolean isFromOrTo = isFrom || isTo;
         if (!isFromOrTo) {
             throw new UnsupportedOperationException(
-                    "Events only support 'from' or 'to'. " +
-                            "Try: update <index> /field from|to /with yyyy-MM-dd HH:mm.");
+                    "Events only support 'from' or 'to'. "
+                            + "Try: update <index> /field from|to /with yyyy-MM-dd HH:mm.");
         }
         if (isFrom) {
             startAt = newDateTimeContent;
